@@ -1,0 +1,27 @@
+{
+  "name": "microstudio-library-gameui",
+  "version": "1.0.0",
+  "description": "Game UI generation library for use with microStudio",
+  "homepage": "https://github.com/nishlumi/microstudio-library-gameui#readme",
+  "bugs": {
+    "url": "https://github.com/nishlumi/microstudio-library-gameui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nishlumi/microstudio-library-gameui.git"
+  },
+  "license": "MIT",
+  "author": "ISHII Eiju",
+  "dependencies": {
+    "adm-zip": "^0.5.16"
+  },
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node index.js"
+  }
+}

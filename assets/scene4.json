@@ -1,0 +1,197 @@
+{
+	"gridmap" : [
+		["label1"],
+		["checkbox1","slider1"],
+		["radio_group_11"],
+		["radio_group_12"],
+		["testbtn","con_checkbox1"]
+	],
+    "controls" : [
+		{
+			"uitype" : 0,
+			"uigroup" : "fourth",
+			"name" : "label1",
+			"bounds" : {
+				"x": -170, "y" : 90, "w" : 75, "h" : 25
+			},
+			"anchor" : {
+				"x" : -1, "y" : 1
+			},
+			"text" : "load from json",
+			"color1" : "#FFF",
+			"color2" : "#F00",
+			"shifted" : {
+				"x" : -1, "y" : -1
+			}
+		},
+		{
+			"uitype" : 2,
+			"uigroup" : "fourth",
+			"name" : "checkbox1",
+			"bounds" : {
+				"x": -170, "y" : 60, "w" : 75, "h" : 25
+			},
+			"anchor" : {
+				"x" : -1, "y" : 1
+			},
+			"text" : "Option 1",
+			"color1" : "#FFF",
+			"color2" : "#F00",
+			"shifted" : {
+				"x" : -1, "y" : -1
+			},
+			"checked" : true,
+			"checkColor" : "#F00"
+		},
+		{
+			"uitype" : 3,
+			"uigroup" : "fourth",
+			"name" : "radio_group_11",
+			"bounds" : {
+				"x": -170, "y" : 30, "w" : 75, "h" : 25
+			},
+			"anchor" : {
+				"x" : -1, "y" : 1
+			},
+			"text" : "Radio 1",
+			"color1" : "#FFF",
+			"checked" : true,
+			"checkColor" : "#0F0",
+			"group" : "r_group"
+		},
+		{
+			"uitype" : 3,
+			"uigroup" : "fourth",
+			"name" : "radio_group_12",
+			"bounds" : {
+				"x": -170, "y" : 0, "w" : 75, "h" : 25
+			},
+			"anchor" : {
+				"x" : -1, "y" : 1
+			},
+			"text" : "Radio 2",
+			"color1" : "#FFF",
+			"checkColor" : "#0F0",
+			"group" : "r_group"
+		},
+		{
+			"uitype" : 4,
+			"uigroup" : "fourth",
+			"name" : "rect1",
+			"bounds" : {
+				"x": -170, "y" : -20, "w" : 100, "h" : 10
+			},
+			"anchor" : {
+				"x" : -1, "y" : 1
+			},
+			"color" : "#FFF",
+			"filled" : true,
+			"radius" : 5,
+			"transparencyInterval" : 10
+		},
+		{
+			"uitype" : 5,
+			"uigroup" : "fourth",
+			"name" : "testbtn",
+			"bounds" : {
+				"x": -170, "y" : -40, "w" : 65, "h" : 25
+			},
+			"text" : "Push",
+			"color" : "#FFF",
+			"bgcolor" : "#00F",
+			"shadow" : {
+				"offset" : {
+					"x" : 2,
+					"y" : 2
+				}
+			}
+		},
+		{
+			"uitype" : 6,
+			"uigroup" : "fourth",
+			"name" : "slider1",
+			"bounds" : {
+				"x": 130, "y" : 80, "w" : 20, "h" : 70
+			},
+			"curval" : 1,
+			"minval" : 1,
+			"maxval" : 30,
+			"step" : 2,
+			"isVertical" : true
+		},
+		{
+			"uitype" : 7,
+			"uigroup" : "fourth",
+			"name" : "testdialog",
+			"bounds" : {
+				"x": 0, "y" : 0, "w" : 200, "h" : 100
+			},
+			"color" : "#FFF",
+			"btntype" : 0,
+			"contents" : [
+				{
+					"uitype" : 0,
+					"bounds" : {
+						"x": 0, "y" : 0, "w" : 150, "h" : 25
+					},
+					"anchor" : {
+						"x" : -1, "y" : 1
+					},
+					"text" : "dialog message is text."
+				}
+			]
+		},
+		{
+			"uitype" : 8,
+			"uigroup" : "fourth",
+			"name" : "container1",
+			"bounds" : {
+				"x": 10, "y" : -10, "w" : 130, "h" : 50
+			},
+			"anchor" : {
+				"x" : -1, "y" : 1
+			},
+			"color" : "#FAA",
+			"contents" : [
+				{
+					"uitype" : 0,
+					"name" : "con_label1",
+					"bounds" : {
+						"x": 0, "y" : 0, "w" : 110, "h" : 25
+					},
+					"anchor" : {
+						"x" : -1, "y" : 1
+					},
+					"color" : "#000",
+					"text" : "container message is text."
+				},
+				{
+					"uitype" : 2,
+					"name" : "con_checkbox1",
+					"bounds" : {
+						"x": 0, "y" : 25, "w" : 110, "h" : 25
+					},
+					"anchor" : {
+						"x" : -1, "y" : 1
+					},
+					"color" : "#000",
+					"text" : "container check"
+				}
+			]
+		},
+
+		{
+			"uitype" : 1,
+			"uigroup" : "fourth",
+			"name" : "image1",
+			"bounds" : {
+				"x": 0, "y" : 80, "w" : 8, "h" : 8
+			},
+			"rotate" : 45,
+			"scale" : 2,
+			"imagename" : "icon", 
+			"imagerect" : {"x": 0, "y" : 0, "w" : 8, "h" : 8}
+		}
+		
+	]
+}

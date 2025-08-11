@@ -1,0 +1,69 @@
+{
+	"gridmap" : {
+
+	},
+    "controls" : [
+		{
+			"uitype" : 1,
+			"uigroup" : "default",
+			"bounds" : {
+				"x": 0, "y" : 0, "w" : 8, "h" : 8
+			},
+			"rotate" : 0,
+			"scale" : 3,
+			"imagename" : "icon", 
+			"imagerect" : {"x": 0, "y" : 0, "w" : 8, "h" : 8}
+		},
+		{
+			"uitype" : 12,
+			"name" : "aimgman",
+			"uigroup" : "default",
+			"bounds" : {
+				"x": -60, "y" : 0, "w" : 32, "h" : 48
+			},
+			"curMove" : "bottom",
+			"moveDict" : {
+				"bottom" : { 
+					"uitype" : 11,
+					"looptype" : 1,
+					"imagelist" : [
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 0, "y" : 0, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 32, "y" : 0, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 64, "y" : 0, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 96, "y" : 0, "w" : 32, "h" : 48}}
+					]
+				},
+				"left" : { 
+					"uitype" : 11,
+					"looptype" : 1,
+					"imagelist" : [
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 0, "y" : 48, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 32, "y" : 48, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 64, "y" : 48, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 96, "y" : 48, "w" : 32, "h" : 48}}
+					]
+				},
+				"right" : { 
+					"uitype" : 11,
+					"looptype" : 1,
+					"imagelist" : [
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 0, "y" : 96, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 32, "y" : 96, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 64, "y" : 96, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 96, "y" : 96, "w" : 32, "h" : 48}}
+					]
+				},
+				"up" : { 
+					"uitype" : 11,
+					"looptype" : 1,
+					"imagelist" : [
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 0, "y" : 144, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 32, "y" : 144, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 64, "y" : 144, "w" : 32, "h" : 48}},
+						{"uitype" : 1,"imagename" : "ch03_elenoa", "imagerect" : {"x": 96, "y" : 144, "w" : 32, "h" : 48}}
+					]
+				}
+			}
+		}
+	]
+}
