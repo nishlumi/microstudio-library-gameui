@@ -19,16 +19,27 @@ SceneFirst = class
     //---GUICheckbox
     this.chk = new GUICheckbox("アップル",new Bounds(this.scr.left+10,30,75,10),false,this.font,"#FFF")
     this.uiman.add(this.chk, this.grpname)
+    this.chk.callback.onchange = function(checked)
+      print("scene 1 checkbox:" + checked)
+    end
     
     //---GUIRadiobutton
     this.rad1 = new GUIRadiobutton("Yes","yesno",new Bounds(this.scr.left+10,0,75,10),true,this.font,"#FFF")
     this.rad2 = new GUIRadiobutton("NO","yesno",new Bounds(this.scr.left+10,-this.font.size-4,75,10),false,this.font,"#FFF")
     this.uiman.add(this.rad1, this.grpname)
     this.uiman.add(this.rad2, this.grpname)
+    local radcb = function(value)
+      print("scene 1 radiobutton:" + value)
+    end
+    this.rad1.callback.onchange = radcb
+    this.rad2.callback.onchange = radcb
     
     //---GUISlider (horizontal)
     this.sld = new GUISlider(new Bounds(this.scr.left+10,this.scr.bottom+50,70,20),0,0,50,1,false)
     this.uiman.add(this.sld, this.grpname)
+    this.sld.callback.onchange = function(newval, oldval)
+      print("scene 1 slider:" + oldval.toString() + " -> " + newval.toString())
+    end
     
     //---GUIScrollArea & GUIContainer (as Children of GUIScrollArea)
     this.scrl = new GUIScrollArea(new Bounds(0,0,142,110),this.font, "#855")
@@ -44,14 +55,17 @@ SceneFirst = class
     this.scrl.addContents(this.create_childcont(7))
     this.scrl.addContents(this.create_childcont(8))
     this.uiman.add(this.scrl, this.grpname)
+    this.scrl.callback.onscroll = function(y)
+      print("scene 1 scroll:" + y.toString())
+    end
     
     //---button to operate GUIScrollArea
     this.btn_scrup = new GUIButton("/\\",new Bounds(this.scr.right-30,-55,30,15),this.font,"#AAA","#888", "#000",true,3)
-    this.btn_scrup.callback = function()
+    this.btn_scrup.callback.onpress = function()
       this.scrl.scrollY(-1)
     end
     this.btn_scrdown = new GUIButton("\/",new Bounds(this.scr.right-60,-55,30,15),this.font,"#AAA","#888", "#000",true,3)
-    this.btn_scrdown.callback = function()
+    this.btn_scrdown.callback.onpress = function()
       this.scrl.scrollY(1)
     end
     this.uiman.add(this.btn_scrup, this.grpname)
@@ -82,6 +96,10 @@ SceneFirst = class
     ]
     this.gridmap.generate_fromcsv(csv)
     this.gridmap.enable_cursor = true
+    
+    this.gridmap.events.onreachedge = function(x, y)
+      print("cursor move is " + x.toString() + ":" + y.toString())
+    end
   end
   create_childcont = function(n)
     //---Child for GUIScrollArea
@@ -103,7 +121,7 @@ SceneFirst = class
     //local dirx = dir.x //this.keyman.is_right() - this.keyman.is_left()
     //local diry = dir.y //this.keyman.is_down() - this.keyman.is_up()
     if this.keyman.is_right() or  this.keyman.is_left() or this.keyman.is_up() or this.keyman.is_down() then
-      print("dirx=" + dir.x + " : diry=" + dir.y)
+      //print("dirx=" + dir.x + " : diry=" + dir.y)
     end
     if this.scr.fps.each(5) then  
       this.gridmap.uiOpertionCheck(dir.x, dir.y)
@@ -133,6 +151,12 @@ SceneSecond = class
     
     //---GUIDialog
     this.dlg1 = new GUIDialog(new Bounds(0,0,150,65),GUIDialog.BTNLIST.OK,this.font)
+    this.dlg1.callback.onopen = function(y)
+      print("scene 2 dialog open")
+    end
+    this.dlg1.callback.onclose = function(y)
+      print("scene 2 dialog close")
+    end
     //---Children for GUIDialog
     local dlgtext = new GUIText("Let's start game!",new Bounds(5,5,dlg1.bounds.w*0.8,this.font.size*2),this.font,"#000")
     dlgtext.setAnchor(-1,1)
@@ -163,8 +187,18 @@ SceneSecond = class
     local lstitem = ["hoge","foot","bar","idea","adam"]
     this.lstbox = new GUIListBox(new Bounds(this.scr.right-30,0, 40, 80),this.font,[])
     this.lstbox.generate_item(lstitem, 17)
+    this.lstbox.callback.onchange = function(newval, oldval)
+      this.txtval.setText(newval.toString())
+    end
     this.uiman.add(this.lstbox,this.grpname)
     
+    this.txt = new GUIText("select:",new Bounds(this.scr.right-200, this.scr.top-50,70,20),this.font,"#F00")
+    this.txt.setAnchor(-1,1)
+    this.uiman.add(this.txt, this.grpname)
+    this.txtval = new GUIText("-1",new Bounds(this.scr.right-150, this.scr.top-50,30,20),this.font,"#F00")
+    this.txtval.setAnchor(-1,1)
+    this.uiman.add(this.txtval, this.grpname)
+
     
   end
   update = function()
@@ -219,6 +253,9 @@ SceneThird = class
     ]
     this.msg = new GUITextMessage(new Bounds(this.scr.left+3,this.scr.top-35, 120, 30),msgs,this.font,"#FFF")
     this.uiman.add(this.msg, this.grpname)
+    this.msg.callback.onpageend = function(index, text)
+      print("scene 3 message:" + index.toString() + ":" + text)
+    end
     
     this.resetbtn = new GUIButton("Reset",new Bounds(this.scr.right-100,this.scr.bottom+80,50,35), this.font)
     this.resetbtn.callback = function()
@@ -259,7 +296,10 @@ SceneFourth = class
       this.testdlg = this.uiman.getObject("testdialog",this.grpname)
       
       this.testbtn.callback = function()
-        this.testdlg.open()
+        //this.testdlg.open()
+        system.prompt("kore?", function(ok, text)
+          print(ok, text)
+        end)
       end
       this.create_gridmap(this.uiman.addGridMapFromJSON(data))
     end)

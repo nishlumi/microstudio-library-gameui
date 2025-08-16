@@ -7,7 +7,7 @@ init = function()
   local a = [1,2,3,49,50,128]
   scr = new GUISystem()
   
-  scr.callback.onResizeScreen = function (w,h)
+  scr.callback.onresize = function (w,h)
     print("new wxh=" + w + h)
   end
   
@@ -68,6 +68,9 @@ init = function()
   */
   testrect1 = new GUIRect(new Bounds(scr.pos(10),scr.pos(10),scr.pos(3),scr.pos(3)), "#0FF")
   scr.uimanager.add(testrect1,"default")
+  testrect1.callback.onenter = function()
+    print("testrect1 enter!")
+  end
   
   asset_manager.loadJSON("testui",function(data)
     

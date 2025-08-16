@@ -1,5 +1,6 @@
 # GameUI ライブラリ
 
+**version:** 1.0.0
 
 ## 概要
 
@@ -16,6 +17,12 @@
 これらを簡単に実装して管理できます。
 
 ---
+
+## リファレンス
+
+GitHubのページを参照してください (https://github.com/nishlumi/microstudio-library-gameui)。
+
+
 
 ## 使用方法
 
@@ -187,8 +194,11 @@ end
 
 ### マス目を意識した位置を設定できる
 
-`GUISystem`には、`unit`というプロパティが存在します。これを `setUnit`メソッドで設定すると、その`unit`の単位で位置を指定できるようになります。
+`GUISystem.pos` メソッドを使うと、`unit`のサイズによるグリッド数で位置やサイズを表現できるようになります。
 
+`GUISystem`には、`unit`というプロパティが存在します。これを `setUnit`メソッドで設定すると、その`unit`の単位を変更できます。
+
+ 
 ```
 gsys = new GUISystem()
 gsys.setUnit(16)
@@ -200,10 +210,33 @@ screen.drawRect(0, 3*16, 5*16, 5*16)
 上記例だと、座標の単位を16にし、四角形を描画しています。
 x=0, y=0の位置から、width=5,height=5という指定の意味になっています。
 
-位置だけでなくサイズにも使えるので、ゲーム中での描画の位置の指定が管理しやすくなるでしょう。
+`pos`メソッドは位置だけでなくサイズ変更にも使えるので、ゲーム中での描画の位置の指定が管理しやすくなるでしょう。
 
 
-## リファレンス
+## 各種イベントのコールバック関数を設定する
 
-GitHubのページを参照してください (https://github.com/nishlumi/microstudio-library-gameui)。
+`GameUI` を継承したクラスには `callback` プロパティがあり、そこに `onxxxx` という名前でイベントが定義されます。そこにコールバック関数を設定すると、特定の操作が行われた後にその関数を呼び出すことができます。
 
+`GameUI.callback`に定義されているイベントは共通なので継承先のクラスでも使用することができます。
+
+```
+btn = new GUIButton(...)
+btn.callback.onclick = function()
+  print("pushed button!")
+end
+
+slider = new GUISlider(...)
+slider.callback.onchange = function(newval, oldval)
+  print("newval=" + newval.toString() + ", oldval=" + oldval.toString())
+end
+
+chk = new GUICheckbox(...)
+chk.callback.onchange = function (checked)
+  print("checkbox is " + checked)
+end
+
+img = new GUIImage(...)
+img.callback.onenter = function(bnd)
+  print("Enter the image from (" + bnd.x.toString() + "," + bnd.y.toString() + ")")
+end
+```

@@ -106,7 +106,7 @@ UIシステムの基本的な設定と座標変換、時間管理（`GUIFPS`を�
 * **`uimanager`**: `GameUIManager` クラスのインスタンス。
 * **`keymanager`**: `KeyManager` クラスのインスタンス。
 * **`callback`**: 各種イベントを実行する際のコールバック関数。
-  - **`onResizeScreen(w: int, h: int)`**: ウィンドウサイズが変更された時に発火する
+  - **`onresize(w: int, h: int)`**: ウィンドウサイズが変更された時に発火する
 
 #### メソッド
 
@@ -303,6 +303,14 @@ UI要素のタイプを定義するオブジェクトです。数値で各UIタ�
 * **`uigroup`**: このUI要素が属するグループの名前。
 * **`tmpparam`**: 自由に使用できるパラメータ領域。
 * **`fps`**: `GUIFPS` のインスタンス。このUI要素の時間管理に使用されます。
+* **`font`**: UI内で使用する`GameFont`。
+* **`callback`**: 各種操作時に任意に実行するコールバック関数をまとめたオブジェクト。`onxxxx` 形式で継承先UIで定義する。
+  - **`onenter(bounds: Bounds)`**: UIにマウスカーソルやタップが侵入した
+  - **`onstay(bounds: Bounds)`**: マウスカーソルやタップがUIに侵入している
+  - **`onleave(bounds: Bounds)`**: マウスカーソルやタップがUIから離れた
+* **`old`**: 古いステータスを保持するオブジェクト(これ以外にも継承先で定義されたり、自由に使えます)
+  - **`touched`**: タッチしていたか
+  - **`entered`**: マウスやタッチがUIに入っていたか
 
 #### メソッド
 
@@ -459,6 +467,8 @@ end
 * **`shifted`**: シャドウのオフセット（x, y）。
 * **`font`**: 使用するフォントのオブジェクト。
 * **`blink_time`**: 点滅時間（現在のコードでは直接使用されていません）。
+* **`callback`**: イベント
+  - **`onchange(newtext, oldtext)`**: テキストの内容が変更された
 
 #### メソッド
 
@@ -487,6 +497,8 @@ end
 * **`checked`**: チェックされているかどうかを示すブール値。
 * **`text`**: チェックボックスのラベルとして使用される`GUIText`インスタンス。
 * **`checkColor`**: チェックボックスの色。
+* **`callback`**: イベント
+  - **`onchange(checked: boolean)`**: チェックボックスの状態が変更された
 
 #### メソッド
 
@@ -514,14 +526,18 @@ end
 * **`text`**: ラジオボタンのラベルとして使用される`GUIText`インスタンス。
 * **`checkColor`**: ラジオボタンの色。
 * **`group`**: ラジオボタンが属するグループ名。
+* **`callback`**: イベント
+  - **`onchange(value: string)`**: ラジオボタンの状態が変更された(`checked`が`true`のUIのみイベント発生します。 `value` はUI名です)
 
 #### メソッド
 
 * **`constructor(text, grpname, bnd: Bounds, chked = 0, font = 0, color1 = 0, color2 = 0,shifted_x = 0, shifted_y = 0)`**: テキスト、グループ名、バウンズなどを設定します。
 * **`loadJSON(data)`**: JSONオブジェクトからプロパティを読み込みます。
-* **`setFont(font: GameFont)`**: テキストラベル用にフォントをセットします。* **`checkTouchArea(x, y)`**: ラジオボタンの本体とテキストの両方を含むタッチ領域をチェックします。
+* **`setFont(font: GameFont)`**: テキストラベル用にフォントをセットします。
+* **`checkTouchArea(x, y)`**: ラジオボタンの本体とテキストの両方を含むタッチ領域をチェックします。
 * **`check()`**: このラジオボタンをチェックし、同じグループ内の他のラジオボタンのチェックを外します。
 * **`uncheck()`**: チェック状態を`false`にします。
+* **`getGroupValue()`**: ラジオボタンのグループの中でtrueになっているUIの`name`を返す
 * **`update()`**: マウスまたはタッチがリリースされたときに、ラジオボタンの状態を切り替えます。同じグループ内の他のラジオボタンのチェック状態も管理します。
 * **`draw()`**: チェック状態に応じて円を塗りつぶすか枠線を描画し、ラベルテキストも描画します。
 
@@ -565,8 +581,9 @@ end
 * **`bgcolor`**: ボタンの背景色。
 * **`pushbgcolor`**: ボタンが押された時の背景色。
 * **`curBgcolor`**: 現在の背景色。
-* **`callback`**: ボタンが押されたときに実行される関数。
-* **`pressing_callback`**: ボタンが押されている間実行する関数。押されている間ずっと発生する。
+* **`callback`**: イベント
+  - **`onpress`**: ボタンが押されたときに実行される。
+  - **`onpressing`**: ボタンが押されている間実行される。押されている間ずっと発生する。
 * **`shadow`**: ボタンの影に関する設定（オフセット、色）。
 
 #### メソッド
@@ -612,20 +629,23 @@ end
 * **`pushbarcolor`**: スライダーのバーが押されている時の色。
 * **`curBarcolor`**: 現在のバーの色（`barcolor`または`pushbarcolor`）。
 * **`bgcolor`**: スライダーのメーターの背景色。
-* **`minval`**: スライダーが取りうる最小値。
-* **`maxval`**: スライダーが取りうる最大値。
+* **`minvalue`**: スライダーが取りうる最小値。
+* **`maxvalue`**: スライダーが取りうる最大値。
 * **`step`**: スライダーの値を調整する際のステップ量。
-* **`curval`**: スライダーの現在の値。
+* **`value`**: スライダーの現在の値。
+* **`old.value`**: 古い値。
 * **`isVertical`**: スライダーが縦型かどうかを示すブール値（`true`なら縦型、`false`なら横型）。
 * **`label`**: スライダーの現在の値を表示するラベルに関する設定（`enable`有効/無効、`size`サイズ、`x`/`y`位置、`color`色）。
 * **`barbnd`**: スライダーのバーの位置とサイズを示す`Bounds`オブジェクト。
 * **`real_x`**: スライダーの内部計算に使用されるX座標（縦型の場合はY座標）。
+* **`callback`**: イベント
+  - **`onchange(newval, oldval)`**: スライダーの値が変更された
 
 #### メソッド
 
 * **`constructor(bnd: Bounds, defaultval, minval, maxval, step, isVertical = false, bgcolor = "#999", barcolor = "#EEE", pushbarcolor = "#FFF")`**: スライダーのインスタンスを初期化し、バウンズ、デフォルト値、最小値、最大値、ステップ、向き、色などを設定します。
 * **`loadJSON(data)`**: JSONオブジェクトからプロパティを読み込みます。
-* **`value(val)`**: スライダーの値を`val`だけ増減させ、`minval`と`maxval`の範囲内に制限します。
+* **`setValue(val)`**: スライダーの値を`val`だけ増減させ、`minval`と`maxval`の範囲内に制限します。
 * **`calclateBarPosition(x, y)`**: マウス/タッチ座標に基づいてスライダーのバーの位置と、それに対応する`curval`を計算します。
 * **`update()`**: マウスまたはタッチ入力に基づいてスライダーのバーの状態（押下状態、色、値）を更新します。
 * **`draw()`**: スライダーのメーター（背景）とバーを描画します。`isVertical`プロパティに応じて縦または横のスライダーとして描画され、ラベルも表示されます。
@@ -662,6 +682,9 @@ sld = new GUISlider(new Bounds(0,0,20,70),0,0,50,1,true)
 * **`curdraw`**: 現在の描画アニメーションのフレーム数。
 * **`is_startdraw`**: ダイアログの描画アニメーションが開始されたかどうかを示すブール値。
 * **`is_drawend`**: ダイアログの描画アニメーションが終了したかどうかを示すブール値。
+* **`callback`**: イベント
+  - **`onopen()`**: ダイアログが開いた
+  - **`onclose()`**: ダイアログが閉じた
 
 #### メソッド
 
@@ -807,6 +830,8 @@ cond.addContents(txt)
 * **`show_row`**: 1行に表示するコンテンツの数。
 * **`item_margin`**: アイテム間のマージン（x, y）。
 * **`oldtouches`**: 前回のタッチ座標を記録するオブジェクト（x, y）。
+* **`callback`**: イベント
+  - **`onscroll(y)`**: スクロールした
 
 #### メソッド
 
@@ -872,6 +897,9 @@ scrl.addContents(create_childcont(3))
 * **`itemheight`**: 各項目の高さ。
 * **`item_str`**: リストボックスに表示される文字列の配列。
 * **`selectIndex`**: 現在選択されている項目のインデックス。
+* **`old.selectIndex`**: 古いインデックス。
+* **`callback`**: イベント
+  - **`onchange(newval, oldval)`**: 選択時に実行するコールバック関数。`select`メソッド使用時には実行されない。
 
 #### メソッド
 
@@ -907,6 +935,9 @@ UI間のカーソルの移動を管理します。
 * **`framedur`**: 1フレームあたりの持続時間（ミリ秒）。
 * **`lasttime`**: 前回の更新時のシステム時刻。
 * **`now`**: 現在のシステム時刻。
+* **`callback`**: イベント
+  - **`onhitui(gridx, gridy, ui)`**: カーソルがUIにヒットした場合に実行します。（グリッド上のX, Y, UIオブジェクト）
+  - **`onreachedge(dirx, diry)`**: カーソルがこれ以上移動できない端に到達した場合に実行します（移動方向X, Y）
 
 #### メソッド
 
@@ -995,6 +1026,8 @@ btn_scrdown(chk,null,null,null)
 * **`is_forwarding`**: テキスト送りアニメーションが実行中かどうかのフラグ。`messages`の最後まで到達すると`false`になります。
 * **`curmsg_index`**: 現在表示しているメッセージ`messages`のインデックス。
 * **`drawtime`**: 描画にかかるフレーム数
+* **`callback`**: イベント
+  - **`onpageend(pageindex, pagetext)`**: 1ページ描画終わった時に実行するコールバック関数。
 
 #### メソッド
 * **`constructor = function(bnd: Bounds, textlst = [], font = 0, fontcolor)`**: `GUITextMessage` をインスタンス化します。

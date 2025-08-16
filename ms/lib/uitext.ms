@@ -17,6 +17,9 @@ GUITextMessage = class extends GUIContainer
     this.curmsg_index = -1
     this.curfdtext_index = 0
     this.is_forwarding = false
+    
+    this.callback["onpageend"] = null
+    
   end
   loadJSON = function (data)
     super(data)
@@ -64,6 +67,11 @@ GUITextMessage = class extends GUIContainer
         this.showtext.setText(this.showtext.text + this.forwardText[this.curfdtext_index])
       else
         this.is_forwarding = false
+        if this.callback.onpageend then
+          if this.callback.onpageend.type == "function" then
+            (this.callback.onpageend)(this.curmsg_index, this.showtext.text)
+          end
+        end
       end
     end
   end

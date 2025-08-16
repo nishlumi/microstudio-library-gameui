@@ -133,7 +133,7 @@ GUISystem = class
     this.uimanager = new GameUIManager(this)
     this.keymanager = new KeyManager(this)
     this.callback = object
-      onResizeScreen = null
+      onresize = null
     end
   end
   setUnit = function(unit)
@@ -159,8 +159,8 @@ GUISystem = class
     if (screen.width != this.oldscreen.width) or 
       (screen.height != this.oldscreen.height)
     then
-      if this.callback.onResizeScreen != null then
-        (this.callback.onResizeScreen)(screen.width, screen.height)
+      if this.callback.onresize != null then
+        (this.callback.onresize)(screen.width, screen.height)
       end
     end
     this.oldscreen.width = screen.width

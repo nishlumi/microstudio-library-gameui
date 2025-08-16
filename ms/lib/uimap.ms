@@ -30,13 +30,13 @@ UIGridMap = class
     this.lasttime = system.time()
     this.now = this.lasttime
     
-    this.events = object
+    this.callback = object
       //---function(gridx, gridy, ui)
-      onHitUI = null
+      onhitui = null
       //---function(dirx, diry)
-      onReachEdge = null
+      onreachedge = null
     end
-    //print(this.events)
+    //print(this.callback)
   end
   generate_fromcsv = function(csv)
     for acsv in csv
@@ -121,7 +121,7 @@ UIGridMap = class
             uiobj = this.map[ly][lx]
           end
           if uiobj and uiobj.selectable then
-            print("selectable:" + uiobj.name + "->" + uiobj.bounds.w + ":" + uiobj.bounds.h)
+            //print("selectable:" + uiobj.name + "->" + uiobj.bounds.w + ":" + uiobj.bounds.h)
             hit = true
             break
           end
@@ -139,23 +139,20 @@ UIGridMap = class
           hit = false
           //---reach event
           if (lx < 0) then
-            if this.events.onReachEdge and this.events.onReachEdge.type == "function" then
-              (this.events.onReachEdge)(-1,0)
+            if this.callback.onreachedge and this.callback.onreachedge.type == "function" then
+              (this.callback.onreachedge)(-1,0)
             end
-          end
-          if (this.map[ly].length <= lx) then
-            if this.events.onReachEdge and this.events.onReachEdge.type == "function" then
-              (this.events.onReachEdge)(1,0)
+          elsif (this.map[ly].length <= lx) then
+            if this.callback.onreachedge and this.callback.onreachedge.type == "function" then
+              (this.callback.onreachedge)(1,0)
             end
-          end
-          if (ly < 0) then
-            if this.events.onReachEdge and this.events.onReachEdge.type == "function" then
-              (this.events.onReachEdge)(0,1)
+          elsif (ly < 0) then
+            if this.callback.onreachedge and this.callback.onreachedge.type == "function" then
+              (this.callback.onreachedge)(0,1)
             end
-          end
-          if (this.map.length <= ly) then
-            if this.events.onReachEdge and this.events.onReachEdge.type == "function" then
-              (this.events.onReachEdge)(0,-1)
+          elsif (this.map.length <= ly) then
+            if this.callback.onreachedge and this.callback.onreachedge.type == "function" then
+              (this.callback.onreachedge)(0,-1)
             end
           end
           break
@@ -172,8 +169,8 @@ UIGridMap = class
       this.cursor.h = uiobj.bounds.h+4
       this.select = uiobj
       ishit.cursor = true
-      if this.events.onHitUI and this.events.onHitUI.type == "function" then
-        (this.events.onHitUI)(lx, ly, uiobj)
+      if this.callback.onhitui and this.callback.onhitui.type == "function" then
+        (this.callback.onhitui)(lx, ly, uiobj)
       end
     else
       //---check roundui, ui has
@@ -219,8 +216,8 @@ UIGridMap = class
           this.select = roundui
           ishit.cursor = true
           hit = true
-          if this.events.onHitUI and this.events.onHitUI.type == "function" then
-            (this.events.onHitUI)(lx, ly, uiobj)
+          if this.callback.onhitui and this.callback.onhitui.type == "function" then
+            (this.callback.onhitui)(lx, ly, uiobj)
           end
         end
       else
@@ -262,8 +259,8 @@ UIGridMap = class
                 this.cursor.h = rcui.bounds.h+4
                 this.select = rcui
                 ishit.mouse_hit = true
-                if this.events.onHitUI and this.events.onHitUI.type == "function" then
-                  (this.events.onHitUI)(lx, ly, uiobj)
+                if this.callback.onhitui and this.callback.onhitui.type == "function" then
+                  (this.callback.onhitui)(lx, ly, uiobj)
                 end
               end
             end

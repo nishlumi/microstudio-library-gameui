@@ -4,9 +4,9 @@
 
 ### Global Functions
 
-**`drawSpritePartBounds = function(imagename, srcbnd, destbnd)`**: This is a `Bounds` version of `screen.drawSpritePart`. It draws the specified part of an image into a specified rectangular area.
+**`drawSpritePartBounds = function(imagename, srcbnd, destbnd)`**: A `Bounds` version of `screen.drawSpritePart`. Draws a specified part of an image to a specified rectangular area.
 
-### `Object` Extensions
+### `Object` Extension
 
 #### Methods
 
@@ -15,13 +15,13 @@
 *   **`getKey = function (val)`**: Searches for the key corresponding to the specified `val` in the object and returns the first key found. Returns an empty string if not found.
 *   **`getKeys = function()`**: Returns all keys of the object as a list.
 
-### `List` Extensions
+### `List` Extension
 
 #### Methods
 
 *   **`clear = function()`**: Removes all elements from the list, making it empty.
 
-### `Number` Extensions
+### `Number` Extension
 
 #### Methods
 
@@ -41,8 +41,8 @@ A global function that provides text wrapping functionality. It is specifically 
 
 * **`isJapaneseChar(char)`**: Determines if the given character is a full-width Japanese character (Kanji, Hiragana, Katakana, or specific symbols).
 * **`calcTextWidth(text)`**: Calculates the display width of the text. Full-width characters are calculated as `charWidth`, and other characters as `charWidth / 2`.
-* **`splitText(text)`**: Splits the text into words or characters. It splits by Japanese characters, full-width numbers, full-width alphanumeric characters, half-width alphanumeric words, punctuation, spaces, etc.
-* **`wrapText(text, maxWidth)`**: Wraps the text based on the specified maximum width.
+* **`splitText(text)`**: Splits text into words or characters. It splits by Japanese characters, full-width numbers, full-width alphanumeric characters, half-width alphanumeric words, punctuation, spaces, etc.
+* **`wrapText(text, maxWidth)`**: Wraps text based on the specified maximum width.
 
 ---
 
@@ -81,7 +81,7 @@ A class that manages the progression of time based on the frame rate.
 ---
 
 ### `GUISystem`
-A class that handles basic UI system settings, coordinate transformation, and time management (through `GUIFPS`).
+A class that handles basic UI system settings, coordinate transformation, and time management (via `GUIFPS`).
 
 #### Properties
 
@@ -90,30 +90,30 @@ A class that handles basic UI system settings, coordinate transformation, and ti
 * **`top`**: The top edge of the screen coordinates.
 * **`bottom`**: The bottom edge of the screen coordinates.
 * **`oldscreen`**: A backup of the screen's width and height.
-* **`unit`**: The unit used for grid calculations (number of pixels).
-* **`unitRange`**: The total number of grids on the screen.
+* **`unit`**: The unit (number of pixels) used for grid calculations.
+* **`unitRange`**: Grid range information for the entire screen.
   - **`minx`**: Minimum grid value (x)
   - **`miny`**: Minimum grid value (y)
   - **`maxx`**: Maximum grid value (x)
   - **`maxy`**: Maximum grid value (y)
-  - **`countx`**: Number of grid elements (x)
-  - **`county`**: Number of grid elements (y)
+  - **`countx`**: Number of grids (x)
+  - **`county`**: Number of grids (y)
 * **`fps`**: An instance of the `GUIFPS` class, used for time management.
-* **`fonts`**: An array of `GameFont` class instances.
+* **`fonts`**: An array of `GameFont` classes.
 * **`uimanager`**: An instance of the `GameUIManager` class.
 * **`keymanager`**: An instance of the `KeyManager` class.
-* **`callback`**: Callback function for executing various events.
-  - **`onResizeScreen(w: int, h: int)`**: Fired when the window size is changed.
+* **`callback`**: A callback function for executing various events.
+  - **`onresize(w: int, h: int)`**: Fired when the window size changes.
 
 #### Methods
 
-* **`constructor()`**: Initializes a `GUISystem` instance, sets up coordinates, grids, and units based on the screen size, and creates an instance of `GUIFPS`.
-* **`setUnit(unit: Number)`**: set new unit value.
-* **`pos(num: Number)`**: Converts a specified number of grid units into pixel coordinates and returns it.
+* **`constructor()`**: Initializes a `GUISystem` instance, sets coordinates, grid, and units based on the screen size, and creates a `GUIFPS` instance.
+* **`setUnit(unit: Number)`**: Sets a new unit.
+* **`pos(num: Number)`**: Converts the specified number of grid units to pixel coordinates and returns the value.
 * **`addFont(name,size)`**: Adds a font you want to use.
-* **`update()`**: Calls the `update` method of the `fps` property to update internal time management. It also saves the screen size to `oldscreen`. It gets the return value from KeyManager.update and returns it further.
-* **`uiupdate(grp = "default")`**: Updates the UI of the specified group in GameUIManager.
-* **`uidraw(grp = "default")`**: Draws the UI of the specified group in GameUIManager.
+* **`update()`**: Calls the `update` method of the `fps` property to update internal time management. It also saves the screen size to `oldscreen`. Returns the value from KeyManager.update.
+* **`uiupdate(grp = "default")`**: Updates the UI of the specified group in the GameUIManager.
+* **`uidraw(grp = "default")`**: Draws the UI of the specified group in the GameUIManager.
 
 ---
 
@@ -132,7 +132,7 @@ A class that holds information about the fonts used in the game.
 
 **Note**:
 * For the standard font, the `name` can be left blank.
-* For non-standard fonts, please load them in Assets as needed.
+* For non-standard fonts, please load them as needed in Assets.
 
 ---
 
@@ -153,7 +153,7 @@ Defines a single key operation (which device, which key, which action).
 ---
 
 ### `KeyManager`
-A class that manages keyboard and gamepad input, checking the status of decision, cancel, directional, and custom keys. It bundles multiple `KeyElement`s to manage them as specific operations (decision, cancel, movement, etc.).
+A class that manages keyboard and gamepad input and checks the state of decision, cancel, directional, and custom keys. It bundles multiple `KeyElement`s to manage them as specific operations (decision, cancel, movement, etc.).
 
 #### Properties
 
@@ -163,13 +163,13 @@ A class that manages keyboard and gamepad input, checking the status of decision
 * **`key_down`**: A list of down direction keys (e.g., DOWN key, S key, DPAD_DOWN).
 * **`key_left`**: A list of left direction keys (e.g., LEFT key, A key, DPAD_LEFT).
 * **`key_right`**: A list of right direction keys (e.g., RIGHT key, D key, DPAD_RIGHT).
-* **`key_custom`**: An object that stores lists of custom keys (pairs of key names and lists of `KeyElement`).
+* **`key_custom`**: An object that stores a list of custom keys (a pair of a key name and a list of `KeyElement`s).
 
 #### Methods
 
-* **`constructor(parent: GUISystem)`**: Initializes an instance of `KeyManager` and sets up standard key lists and an object for custom keys.
+* **`constructor(parent: GUISystem)`**: Initializes a `KeyManager` instance and sets up standard key lists and an object for custom keys.
 * **`_checkBody(key, action = "")`**: Checks if a key is held down (`"d"`), pressed (`"p"`), or released (`"r"`) based on the specified `KeyElement` and action. It supports both keyboard and gamepad.
-* **`_keyBody(lst, action = "")`**: Iterates through a list of `KeyElement`s and checks if any of the keys satisfy the specified action (or the default action set for the key).
+* **`_keyBody(lst, action = "")`**: Iterates through a list of `KeyElement`s and checks if any key satisfies the specified action (or the default action set for the key).
 * **`addCustomKey(name, lst)`**: Adds a list of custom keys associated with `name`.
 * **`removeCustomKey(name)`**: Removes the custom key list for the specified `name`.
 * **`is_up(action = "")`**: Checks if the up direction key satisfies the specified action (default is pressed `"p"`).
@@ -178,15 +178,15 @@ A class that manages keyboard and gamepad input, checking the status of decision
 * **`is_right(action = "")`**: Checks if the right direction key satisfies the specified action.
 * **`checkDecide(action = "")`**: Checks if the decision key satisfies the specified action.
 * **`checkCancel(action = "")`**: Checks if the cancel key satisfies the specified action.
-* **`checkCustom(name, action = "")`**: Checks if the custom key with the specified `name` satisfies the specified action.
+* **`checkCustom(name, action = "")`**: Checks if the custom key for the specified `name` satisfies the specified action.
 * **`update()`**: Updates key operations. Returns `{x : [X-axis direction (-1 to 1)], y: [Y-axis direction (-1 to 1)] }`.
 
 #### Note:
-If you instantiate `GUISystem`, it includes this as a property, so you generally won't need to prepare it separately.
+If you instantiate `GUISystem`, it includes this as a property, so you generally don't need to prepare it separately.
 
 By default, operations for decision, cancel, and up/down/left/right movement are defined. To add input keys, use the `KeyElement` class and add them to `key_decide`, etc.
 
-For game operations other than the standard ones, you can extend it by registering an operation name and a list of `KeyElement`s in `key_custom`.
+For game operations other than the standard ones, you can extend them by registering an operation name and a list of `KeyElement`s in `key_custom`.
 
 Direction can be obtained as a boolean value with `is_up`, etc. If you want to get the direction as a number from -1 to 1, call `update` and refer to its return value.
 
@@ -211,7 +211,7 @@ Direction can be obtained as a boolean value with `is_up`, etc. If you want to g
 ---
 
 ### `TYPELIST`
-An object that defines the types of UI elements. Each UI type is assigned a numerical value.
+An object that defines the types of UI elements. Each UI type is assigned a number.
 
 | UI Type          | Value |
 | :--------------- | :-- |
@@ -239,7 +239,7 @@ A class that manages all UI elements of the game in groups.
 #### Methods
 
 * **`constructor(parent: GUISystem)`**: Initializes the `this.ui` object and creates a `default` group.
-* **`loadFromJSON(data)`**: Generates each UI from JSON data. Returns a list of the generated UI. This only generates the UI.
+* **`loadFromJSON(data)`**: Generates each UI from JSON data. Returns a list of the generated UIs. This only generates the UI.
 * **`addFromJSON(data)`**: Generates each UI from JSON data and also adds it to the specified UI group.
 * **`getGroupCount()`**: Returns the number of managed UI groups.
 * **`getCount(group = "default")`**: Returns the number of UI elements in the specified group.
@@ -252,13 +252,13 @@ A class that manages all UI elements of the game in groups.
 * **`removeGroup(group)`**: Removes the specified group. The `default` group cannot be removed.
 * **`getGroupItems(grpname)`**: Returns all UI elements belonging to the specified group name as a list.
 * **`update(group)`**: Updates all UI elements in the specified group.
-* **`draw(group)`**: Draws all UI elements in the specified group. `DIALOG` type UI is drawn with priority over other elements.
+* **`draw(group)`**: Draws all UI elements in the specified group. `DIALOG` type UIs are drawn with priority over other elements.
 
 #### Note:
-Create only one global `GameUIManager` during the game, and add groups for each game scene.
+Create only one global `GameUIManager` during the game, and add a group for each game scene.
 Then, add and remove each UI element by specifying the group.
 
-If you instantiate `GUISystem`, it includes this as a property, so you generally won't need to prepare it separately.
+If you instantiate `GUISystem`, it includes this as a property, so you generally don't need to prepare it separately.
 
 Call `update()` and `draw()` by specifying a group. (Otherwise, the UI of all scenes will always be updated.)
 Calling `uiupdate` and `uidraw` in `GUISystem` is the same.
@@ -292,6 +292,14 @@ The base class for all UI elements.
 * **`uigroup`**: The name of the group to which this UI element belongs.
 * **`tmpparam`**: A parameter area that can be used freely.
 * **`fps`**: An instance of `GUIFPS`, used for time management of this UI element.
+* **`font`**: The `GameFont` to be used within the UI.
+* **`callback`**: An object that groups callback functions to be executed arbitrarily during various operations. Defined in inherited UIs in the `onxxxx` format.
+  - **`onenter`**: Mouse cursor or tap enters the UI.
+  - **`onstay`**: Mouse cursor or tap is inside the UI.
+  - **`onleave`**: Mouse cursor or tap leaves the UI.
+* **`old`**: An object that holds the old status (can be defined in inherited classes or used freely).
+  - **`touched`**: Was it touched.
+  - **`entered`**: Was the mouse or touch inside the UI.
 
 #### Methods
 
@@ -306,12 +314,12 @@ The base class for all UI elements.
 * **`setSize(w, h)`**: Sets the size of the UI element.
 * **`checkTouchArea(x, y)`**: Checks if the specified coordinates are within the touch area of the UI element.
 * **`update()`**: Updates the state of the UI element (calls `this.fps.update()`).
-* **`draw()`**: Prepares the UI element for drawing (sets anchor, scale, rotation, alpha). The specific drawing is done in child classes.
+* **`draw()`**: Prepares the UI element for drawing (sets anchor, scale, rotation, alpha). The specific drawing is done in the child class.
 
 #### Note:
-By using `UIGridMap`, which will be described later, you can move the cursor between UI elements with a keyboard or gamepad.
-To do this, set a reference to the UI of the cursor's destination in `roundui`.
-You can control the cursor more finely than by using only `UIGridMap`.
+By using the `UIGridMap` described later, you can move the cursor between UIs with the keyboard or gamepad.
+To do this, set a reference to the destination UI for the cursor in `roundui`.
+You can control the cursor more finely than just using `UIGridMap`.
 
 ---
 
@@ -327,7 +335,7 @@ A UI element class for displaying images.
 #### Methods
 
 * **`constructor(bnd: Bounds, imagename, imagerect = 0, rotate = 0, scale = 1.0)`**: Sets the image name, the rectangular area of the image to display (`imagerect`), position, size, etc. If `imagerect` is specified, a part of the sprite is cut out and displayed.
-* **`setImage(newimg)`**: Sets the image to display to a new image.
+* **`setImage(newimg)`**: Sets the image to be displayed to a new image.
 * **`update()`**: Calls the parent class's `update` method.
 * **`draw()`**: Draws the image. Uses `drawSpritePartBounds` if `isCutSprite` is `true`, otherwise uses `screen.drawSprite`.
 
@@ -340,22 +348,22 @@ A UI element class that manages and displays animated images.
 
 * **`LOOPTYPE`**: An object that defines the loop type of the animation (`TOBEGIN`, `NOLOOP`, `REVERSE`).
 * **`imagelist`**: A list of `GUIImage` objects, representing each frame of the animation.
-* **`isManualAnimation`**: A boolean value indicating whether the animation is manually controlled (`true` if playing).
+* **`isManualAnimation`**: A boolean value indicating whether the animation is being controlled manually (`true` if playing).
 * **`curImage`**: The index of the currently displayed image.
 * **`looptype`**: The loop method of the animation (a value from `LOOPTYPE`).
 * **`loopv`**: The playback direction of the animation (1: forward, -1: reverse).
-* **`animationPeriod`**: The duration for which each frame of the animation is displayed (number of frames).
+* **`animationPeriod`**: The duration (number of frames) that each frame of the animation is displayed.
 
 #### Methods
 
-* **`constructor(bnd)`**: Initializes an instance of `GUIAnimationImage` and sets up the animation frame list, loop settings, etc.
+* **`constructor(bnd)`**: Initializes an instance of `GUIAnimationImage` and sets the animation frame list, loop settings, etc.
 * **`loadJSON(data)`**: Loads properties from a JSON object.
 * **`addImage(img)`**: Adds a `GUIImage` to the animation. The bounds of the added image are adjusted to the bounds of the animation image itself.
 * **`removeImage(index)`**: Removes the image at the specified index from the animation.
 * **`play()`**: Plays the animation from the beginning.
 * **`stop()`**: Stops the animation playback.
-* **`playToggle()`**: Toggles the play/pause state of the animation.
-* **`update()`**: If the animation is playing, proceeds to the next frame based on the set duration. Adjusts the playback direction and index according to the loop type.
+* **`playToggle()`**: Toggles the play/pause of the animation.
+* **`update()`**: If the animation is playing, proceeds to the next frame based on the set period. Adjusts the playback direction and index according to the loop type.
 * **`draw()`**: Draws the image of the currently displayed animation frame.
 
 ---
@@ -370,9 +378,9 @@ A class that manages multiple animated images and switches the currently display
 
 #### Methods
 
-* **`constructor(bnd: Bounds)`**: Initializes an instance of `GUIAnimationImageManager` and sets up the animation dictionary and the current movement.
+* **`constructor(bnd: Bounds)`**: Initializes an instance of `GUIAnimationImageManager` and sets the animation dictionary and the current movement.
 * **`cur(name)`**: Returns the animated image with the specified name.
-* **`setCur(name)`**: Sets the currently displayed animation to the one with the specified name.
+* **`setCur(name)`**: Sets the currently displayed animation to the specified name.
 * **`addAnimation(name)`**: Creates a new animated image and adds it to the management list with the specified name.
 * **`removeAnimation(name)`**: Removes the animated image with the specified name from the management list.
 * **`update()`**: Calls the `update` method of the currently displayed animated image.
@@ -412,7 +420,7 @@ The usage flow is as follows.
   aimgman.curMove = "bottom"
 ```
 
-`GUIAnimationImageManager` can manage multiple `GUIAnimationImage`s. By specifying an animation name in `addAnimation`, it internally generates and holds a `GUIAnimationImage`.
+`GUIAnimationImageManager` can manage multiple `GUIAnimationImage`s. By specifying the animation name in `addAnimation`, it generates and holds a `GUIAnimationImage` internally.
 
 That `GUIAnimationImage` can manage multiple `GUIImage`s to construct a single animation.
 (If you are creating animations in the Sprites panel, you may only need one `GUIImage`.)
@@ -430,7 +438,7 @@ update = function()
 end
 ```
 
-- For a code sample, please see GUIAnimationImageManager & GUIImage in `example.ms`.
+- For a code sample, please see `GUIAnimationImageManager & GUIImage` in `example.ms`.
 
 ---
 
@@ -448,26 +456,28 @@ A UI element class for displaying text.
 * **`shifted`**: The offset of the shadow (x, y).
 * **`font`**: The font object to use.
 * **`blink_time`**: The blink time (not directly used in the current code).
+* **`callback`**: Events
+  - **`onchange(newtext, oldtext)`**: The content of the text has changed.
 
 #### Methods
 
 * **`constructor(text, bnd: Bounds, font = 0, color1 = 0, color2 = 0,shifted_x = 0, shifted_y = 0)`**: Sets the text content, bounds, font, colors, etc.
 * **`loadJSON(data)`**: Loads properties from a JSON object.
 * **`setText(txt)`**: Sets the text and recalculates wrapping if necessary.
-* **`recalcWrap()`**: Recalculates the text wrapping.
-* **`refreshText(width)`**: Recalculates the text wrapping based on the width.
+* **`recalcWrap()`**: Recalculates text wrapping.
+* **`refreshText(width)`**: Recalculates text wrapping based on the width.
 * **`update()`**: Calls the parent class's `update` method.
 * **`draw()`**: Draws the text. It can also draw a shadow-like effect based on the `shifted` property.
 
 #### Note:
 `GUIText` has a built-in `multiTextSplitter` library to control wrapping.
 
-In addition, you can change the font or draw a shifted shadow by specifying `shifted_x` and `shifted_y`.
+In addition, you can change the font or specify `shifted_x` and `shifted_y` to draw a shifted shadow.
 
 ---
 
 ### `GUICheckbox`
-A UI element class with a check state.
+A UI element class with a checked state.
 
 #### Properties
 
@@ -475,20 +485,22 @@ A UI element class with a check state.
 * **`checked`**: A boolean value indicating whether it is checked.
 * **`text`**: A `GUIText` instance used as the label for the checkbox.
 * **`checkColor`**: The color of the checkbox.
+* **`callback`**: Events
+  - **`onchange(checked: boolean)`**: The state of the checkbox has changed.
 
 #### Methods
 
-* **`constructor(text, bnd: Bounds, chked = 0, font = 0, color1 = 0, color2 = 0,shifted_x = 0, shifted_y = 0)`**: Sets the text, bounds, initial check state, font, colors, etc.
+* **`constructor(text, bnd: Bounds, chked = 0, font = 0, color1 = 0, color2 = 0,shifted_x = 0, shifted_y = 0)`**: Sets the text, bounds, initial checked state, font, colors, etc.
 * **`loadJSON(data)`**: Loads properties from a JSON object.
 * **`setFont(font: GameFont)`**: Sets the font for the text label.
 * **`checkTouchArea(x, y)`**: Checks the touch area that includes both the checkbox body and the text.
-* **`check()`**: Inverts the check state.
-* **`uncheck()`**: Sets the check state to `false`.
+* **`check()`**: Toggles the checked state.
+* **`uncheck()`**: Sets the checked state to `false`.
 * **`update()`**: Toggles the state of the checkbox when the mouse or touch is released.
-* **`draw()`**: Fills a square or draws an outline depending on the check state, and also draws the label text.
+* **`draw()`**: Fills a square or draws a border depending on the checked state, and also draws the label text.
 
 #### Note:
-To get the check state, refer to `checked`.
+To get the checked state, refer to `checked`.
 
 ---
 
@@ -502,6 +514,8 @@ A UI element class where only one can be selected within a group.
 * **`text`**: A `GUIText` instance used as the label for the radio button.
 * **`checkColor`**: The color of the radio button.
 * **`group`**: The name of the group to which the radio button belongs.
+* **`callback`**: Events
+  - **`onchange(value: string)`**: The state of the radio button has changed (event occurs only for the UI where `checked` is `true`. `value` is the UI name).
 
 #### Methods
 
@@ -510,19 +524,20 @@ A UI element class where only one can be selected within a group.
 * **`setFont(font: GameFont)`**: Sets the font for the text label.
 * **`checkTouchArea(x, y)`**: Checks the touch area that includes both the radio button body and the text.
 * **`check()`**: Checks this radio button and unchecks other radio buttons in the same group.
-* **`uncheck()`**: Sets the check state to `false`.
-* **`update()`**: Toggles the state of the radio button when the mouse or touch is released. It also manages the check state of other radio buttons in the same group.
-* **`draw()`**: Fills a circle or draws an outline depending on the check state, and also draws the label text.
+* **`uncheck()`**: Sets the checked state to `false`.
+* **`getGroupValue()`**: Returns the `name` of the UI that is true in the radio button group.
+* **`update()`**: Toggles the state of the radio button when the mouse or touch is released. It also manages the checked state of other radio buttons in the same group.
+* **`draw()`**: Fills a circle or draws a border depending on the checked state, and also draws the label text.
 
 #### Note:
-* By specifying a `group`, they become mutually exclusive.
-* To get the check state, refer to `checked`.
+* By specifying a `group`, it becomes mutually exclusive.
+* To get the checked state, refer to `checked`.
 * To move the cursor between radio button items, use `UIGridMap` or set `roundui` for each UI element.
 
 ---
 
 ### `GUIRect`
-A UI element class for drawing simple rectangles.
+A UI element class for drawing a simple rectangle.
 
 #### Properties
 
@@ -534,10 +549,10 @@ A UI element class for drawing simple rectangles.
 
 #### Methods
 
-* **`constructor(bnd: Bounds, color, filled = true, radius = 0, transparency = 1, transparency_interval = 0)`**: Sets the bounds, color, fill status, corner radius, transparency, etc.
+* **`constructor(bnd: Bounds, color, filled = true, radius = 0, transparency = 1, transparency_interval = 0)`**: Sets the bounds, color, fill, corner radius, transparency, etc.
 * **`loadJSON(data)`**: Loads properties from a JSON object.
 * **`update()`**: Calls the parent class's `update` method.
-* **`draw()`**: Fills or draws an outline of a rectangle (including rounded rectangles) based on the settings.
+* **`draw()`**: Fills or draws a border for the rectangle (including rounded rectangles) based on the settings.
 
 ---
 
@@ -553,13 +568,14 @@ A UI element class for a clickable button.
 * **`bgcolor`**: The background color of the button.
 * **`pushbgcolor`**: The background color when the button is pressed.
 * **`curBgcolor`**: The current background color.
-* **`callback`**: A function to be executed when the button is pressed.
-* **`pressing_callback`**: A function to be executed while the button is being pressed. It occurs continuously while pressed.
+* **`callback`**: Events
+  - **`onpress`**: Executed when the button is pressed.
+  - **`onpressing`**: Executed while the button is being pressed. Occurs continuously while pressed.
 * **`shadow`**: Settings for the button's shadow (offset, color).
 
 #### Methods
 
-* **`constructor(text, bnd, font = 0, bgcolor = "#FF0", pushbgcolor = "#CC0", fontcolor = "#000", filled = true, radius = 0, callback = 0)`**: Sets the text, bounds, font, background color, pressed background color, font color, fill status, corner radius, callback function, etc.
+* **`constructor(text, bnd, font = 0, bgcolor = "#FF0", pushbgcolor = "#CC0", fontcolor = "#000", filled = true, radius = 0, callback = 0)`**: Sets the text, bounds, font, background color, pressed background color, font color, fill, corner radius, callback function, etc.
 * **`loadJSON(data)`**: Loads properties from a JSON object.
 * **`setFont(font: GameFont)`**: Sets the font for the text label.
 * **`checkTouchArea(x, y)`**: Checks the touch area that includes both the radio button body and the text.
@@ -568,7 +584,7 @@ A UI element class for a clickable button.
 * **`draw()`**: Draws the button's shadow and body, and also draws the text.
 
 #### Note:
-For the event when the button is pressed, you can easily execute any process by specifying a `function end` for `callback`.
+For the event when the button is pressed, you can easily execute any process by specifying `function end` in `callback`.
 
 You can also execute your own events by manually checking `pressed`. You can also call the callback function at any time with the `push` method.
 
@@ -593,28 +609,31 @@ A slider UI element class for adjusting a value.
 
 #### Properties
 
-* **`pressed`**: A boolean value indicating whether the slider's bar is currently pressed.
-* **`presspos`**: The coordinates of the mouse/touch when the bar is pressed.
-* **`barcolor`**: The normal color of the slider's bar.
-* **`pushbarcolor`**: The color of the slider's bar when it is pressed.
+* **`pressed`**: A boolean value indicating whether the slider bar is currently pressed.
+* **`presspos`**: The mouse/touch coordinates when the bar is pressed.
+* **`barcolor`**: The normal color of the slider bar.
+* **`pushbarcolor`**: The color of the slider bar when it is pressed.
 * **`curBarcolor`**: The current color of the bar (`barcolor` or `pushbarcolor`).
 * **`bgcolor`**: The background color of the slider's meter.
-* **`minval`**: The minimum value the slider can take.
-* **`maxval`**: The maximum value the slider can take.
+* **`minvalue`**: The minimum value the slider can take.
+* **`maxvalue`**: The maximum value the slider can take.
 * **`step`**: The step amount for adjusting the slider's value.
-* **`curval`**: The current value of the slider.
+* **`value`**: The current value of the slider.
+* **`old.value`**: The old value.
 * **`isVertical`**: A boolean value indicating whether the slider is vertical (`true` for vertical, `false` for horizontal).
-* **`label`**: Settings for the label that displays the slider's current value (`enable` on/off, `size` size, `x`/`y` position, `color` color).
-* **`barbnd`**: A `Bounds` object indicating the position and size of the slider's bar.
-* **`real_x`**: The X coordinate used for the slider's internal calculations (Y coordinate for vertical sliders).
+* **`label`**: Settings for the label that displays the slider's current value (`enable` on/off, `size`, `x`/`y` position, `color`).
+* **`barbnd`**: A `Bounds` object indicating the position and size of the slider bar.
+* **`real_x`**: The X coordinate used for internal calculations of the slider (Y coordinate for vertical).
+* **`callback`**: Events
+  - **`onchange(newval, oldval)`**: The value of the slider has changed.
 
 #### Methods
 
 * **`constructor(bnd: Bounds, defaultval, minval, maxval, step, isVertical = false, bgcolor = "#999", barcolor = "#EEE", pushbarcolor = "#FFF")`**: Initializes a slider instance and sets the bounds, default value, min/max values, step, orientation, colors, etc.
 * **`loadJSON(data)`**: Loads properties from a JSON object.
-* **`value(val)`**: Increases or decreases the slider's value by `val` and clamps it within the `minval` and `maxval` range.
-* **`calclateBarPosition(x, y)`**: Calculates the position of the slider's bar and the corresponding `curval` based on mouse/touch coordinates.
-* **`update()`**: Updates the state of the slider's bar (pressed state, color, value) based on mouse or touch input.
+* **`setValue(val)`**: Increases or decreases the slider's value by `val` and clamps it within the `minval` and `maxval` range.
+* **`calclateBarPosition(x, y)`**: Calculates the position of the slider bar and the corresponding `curval` based on the mouse/touch coordinates.
+* **`update()`**: Updates the state of the slider bar (pressed state, color, value) based on mouse or touch input.
 * **`draw()`**: Draws the slider's meter (background) and bar. It is drawn as a vertical or horizontal slider depending on the `isVertical` property, and the label is also displayed.
 
 #### Note:
@@ -648,6 +667,9 @@ A UI element class for a pop-up dialog window.
 * **`curdraw`**: The current frame number of the drawing animation.
 * **`is_startdraw`**: A boolean value indicating whether the dialog's drawing animation has started.
 * **`is_drawend`**: A boolean value indicating whether the dialog's drawing animation has finished.
+* **`callback`**: Events
+  - **`onopen()`**: The dialog has opened.
+  - **`onclose()`**: The dialog has closed.
 
 #### Methods
 
@@ -666,6 +688,7 @@ A UI element class for a pop-up dialog window.
 
 #### Note (Basic):
 * You can add UI elements other than text to `contents`.
+
 * The dialog is not displayed on the screen until it is opened. It will be used by displaying it in combination with a keyboard, buttons, etc.
 
 ```
@@ -682,8 +705,9 @@ update = function()
 end
 ```
 
-#### Note (Usage as a Dialog):
-The dialog can display buttons to be used other than `contents`. Set the value of `BTNLIST` to `btns` at the time of creation according to the purpose.
+#### Note (Usage as a dialog):
+
+The dialog can display buttons to be used in addition to `contents`. Set the value of `BTNLIST` to `btns` during creation according to the purpose.
 
 * OK button only: `GUIDialog.BTNLIST.OK`
 * Yes, No buttons: `GUIDialog.BTNLIST.YESNO`
@@ -719,13 +743,13 @@ end
 ```
 
 By using `checkKeys()`, you can get input from the keyboard or gamepad and operate the buttons as they are.
-`checkKeys()` has the same return value as `checkPressed()`. This allows the buttons to correspond as follows, even if the actual keys for the decision and cancel keys in the game are different.
+The return value of `checkKeys()` is the same as `checkPressed()`. This allows the buttons to correspond as follows, even if the actual keys for the decision key and cancel key are different in the game.
 
 * OK button: Decision key
 * Yes button: Decision key
 * Cancel button: Cancel key
 
-For example, if you want to close the dialog when any button is pressed, you need to implement it as follows.
+For example, to close the dialog when any button is pressed, you need to implement it as follows.
 
 ```
 local dlgret = dlg.checkKeys()
@@ -754,10 +778,10 @@ A general-purpose container class for grouping multiple UI elements.
 * **`addContents(ui)`**: Adds a UI element inside the container and adjusts its position. It also handles wrapping for text.
 * **`recalcText(index)`**: Recalculates the wrapping of the text UI element at the specified index.
 * **`update()`**: Calculates the position of the internal UI elements and updates them.
-* **`draw()`**: Draws the container's background and the internal UI elements.
+* **`draw()`**: Draws the container's background and internal UI elements.
 
 #### Note:
-This is a general-purpose class that can contain other UI elements. If you want to draw the container itself, specify a color for `color` and `filled`.
+This is a general-purpose class that can contain other UI elements. To draw the container itself, specify a color for `color` and `filled`.
 
 Also, `GUIContainer` can be used as a child element of `GUIScrollArea`.
 
@@ -787,6 +811,8 @@ An area class for scrolling and displaying internal UI elements.
 * **`show_row`**: The number of content items to display in one row.
 * **`item_margin`**: The margin between items (x, y).
 * **`oldtouches`**: An object that records the previous touch coordinates (x, y).
+* **`callback`**: Events
+  - **`onscroll(y)`**: Scrolled.
 
 #### Methods
 
@@ -806,10 +832,10 @@ If a child element exceeds its own drawing area `bounds`, the exceeding element 
 Child elements must have the same width and height. It is recommended to use the following generation process.
 
 Use a function to generate child elements in a fixed form.
-It is recommended that the child element be a `GUIContainer`. It will be easier to manage by adding text and buttons as child elements of `GUIContainer`.
+It is recommended that the child element be a `GUIContainer`. It is easier to manage by adding text and buttons as child elements of `GUIContainer`.
 There are no restrictions on the child elements of `GUIContainer`.
 
-Also, it is recommended to set the anchor to the upper left (x=-1, y=1) to make it easier to understand.
+It is also recommended to set the anchor to the upper left (x=-1, y=1) to make it easier to understand.
 
 ```
 create_childcont = function (param)
@@ -832,7 +858,7 @@ scrl.addContents(create_childcont(3))
 
 #### Note (Position of child elements of `GUIContainer` and `GUIScrollArea`):
 
-The position of a child element is calculated based on the Bounds of its parent `GUIContainer` or `GUIScrollArea`. The new Bounds() specified for the child element at the time of declaration specifies the relative position from the parent element.
+The position of child elements is calculated based on the Bounds of the parent `GUIContainer` or `GUIScrollArea`. The new Bounds() specified for the child element at the time of declaration specifies the relative position from the parent element.
 
 ---
 
@@ -846,8 +872,11 @@ A list box UI element class that inherits from `GUIScrollArea` and has selectabl
 * **`fontcolor`**: The font color of the items.
 * **`selectcolor`**: The background color of the selected item.
 * **`itemheight`**: The height of each item.
-* **`item_str`**: An array of strings to be displayed in the list box.
+* **`item_str`**: An array of strings displayed in the list box.
 * **`selectIndex`**: The index of the currently selected item.
+* **`old.selectIndex`**: The old index.
+* **`callback`**: Events
+  - **`onchange(newval, oldval)`**: A callback function to be executed upon selection. Not executed when using the `select` method.
 
 #### Methods
 
@@ -859,7 +888,7 @@ A list box UI element class that inherits from `GUIScrollArea` and has selectabl
 * **`draw()`**: Calls the parent class's `draw` method, and if the selected item is within the visible area, draws the selection color on the background of that item.
 
 #### Note:
-Unlike its parent `GUIScrollArea`, it is generated with a list of strings `items` as an argument.
+Unlike the parent `GUIScrollArea`, it is generated with a list of strings `items` as an argument.
 The child elements become selectable items and can be selected with the cursor, mouse, or tap.
 Of course, you can also scroll to display the remaining items.
 
@@ -872,27 +901,27 @@ Manages cursor movement between UIs.
 
 * **`uimanager`**: An instance of `GameUIManager`, used for managing UI elements.
 * **`keymanager`**: An instance of `KeyManager`, used for managing key input.
-* **`map`**: A 2D array of UI elements (or their names as strings).
+* **`map`**: A 2D array of UI elements (or their string names).
 * **`uigroup`**: The name of the UI group that this grid map operates on.
 * **`cursor`**: A `Bounds` object indicating the currently selected UI element.
 * **`cursorColor`**: The color of the cursor.
 * **`cursorAlpha`**: The transparency of the cursor.
-* **`cursorAlphaVelocity`**: The rate of change of the cursor's transparency.
+* **`cursorAlphaVelocity`**: The speed of change of the cursor's transparency.
 * **`select`**: The currently selected UI element.
 * **`enable_cursor`**: A boolean value indicating whether to enable the display of the cursor.
 * **`framedur`**: The duration per frame in milliseconds.
-* **`lasttime`**: The system time at the last update.
+* **`lasttime`**: The system time at the previous update.
 * **`now`**: The current system time.
 
 #### Methods
 
-* **`constructor(uiman: GameUIManager, keyman: KeyManager, group)`**: Initializes a `UIGridMap` instance and sets the UI manager, key manager, the UI group to operate on, the map, and cursor-related properties.
+* **`constructor(uiman: GameUIManager, keyman: KeyManager, group)`**: Initializes a `UIGridMap` instance and sets the UI manager, key manager, the UI group to be operated on, the map, and cursor-related properties.
 * **`generate_fromcsv(csv)`**: Generates a map from CSV data (comma-separated).
 * **`appendRow(cols)`**: Adds a new row to the map.
 * **`select(x, y)`**: Selects the UI element at the specified map coordinates.
 * **`getIndex(ui)`**: Returns the index (x, y) of the specified UI element on the map.
-* **`uiOpertionCheck(dirx, diry)`**: Checks UI operations (cursor movement and mouse/touch hits). It searches for a UI element that can be moved to in the direction specified by `dirx` and `diry`, or processes selection by mouse/touch input. It also attempts to move to adjacent elements using the `roundui` property of the UI element.
-* **`update()`**: Processes the cursor's blinking animation and decision key input for the selected UI element (checkboxes and radio buttons).
+* **`uiOpertionCheck(dirx, diry)`**: Checks UI operations (cursor movement and mouse/touch hits). It searches for a UI element that can be moved to in the direction specified by `dirx` and `diry`, and processes selection by mouse/touch input. It also attempts to move to an adjacent element using the `roundui` property of the UI element.
+* **`update()`**: Processes the cursor's blinking animation and decision key input for the selected UI element (checkbox or radio button).
 * **`draw()`**: If the cursor is enabled, draws a cursor around the selected UI element.
 
 #### Note:
@@ -940,10 +969,10 @@ end
 * In the update function, pass the direction information returned from `KeyManager.update` to `UIGridMap.uiOperationCheck` for judgment.
 * Call `UIGridMap.update` after `UIGridMap.uiOperationCheck`.
 
-#### Fine Control:
+#### Fine control:
 In the example above, you cannot move the cursor from `chk` to `btn_scrdown`. To control cursor movement between specific UI elements, do the following.
 
-Set the target UI element's name or the element itself to the properties of each direction of `roundui` inherited from `GameUI`. You can specify the direction and the destination UI with the `setDirectRound` method.
+Set the name of the target UI element or the element itself to the properties of each direction of `roundui` inherited from `GameUI`. You can specify the direction and the destination UI with the `setDirectRound` method.
 
 ```
 chk.setDirectRound("right",btn_scrdown)
@@ -963,10 +992,12 @@ A class that holds messages and manages the animation of displaying them one cha
 #### Properties
 * **`messages`**: A list of sentences to display.
 * **`alltext`**: A `GUIText` that holds the full text of the current message. For internal reference.
-* **`showtext`**: A `GUIText` that holds the text currently displayed on the screen. For internal reference.
-* **`is_forwarding`**: A flag indicating whether the text forwarding animation is in progress. Becomes `false` when the end of `messages` is reached.
+* **`showtext`**: A `GUIText` that holds the text currently being displayed on the screen. For internal reference.
+* **`is_forwarding`**: A flag indicating whether the text forwarding animation is running. Becomes `false` when the end of `messages` is reached.
 * **`curmsg_index`**: The index of the currently displayed message in `messages`.
 * **`drawtime`**: The number of frames it takes to draw.
+* **`callback`**: Events
+  - **`onpageend(pageindex, pagetext)`**: A callback function to be executed when one page has finished drawing.
 
 #### Methods
 * **`constructor = function(bnd: Bounds, textlst = [], font = 0, fontcolor)`**: Instantiates a `GUITextMessage`.
@@ -978,7 +1009,7 @@ A class that holds messages and manages the animation of displaying them one cha
 * **`draw()`**: Draws the content of `showtext`.
 
 #### Note:
-When displaying messages in a game, they are displayed one word (or one character for Japanese) at a time.
+When displaying messages during a game, they are displayed one word (or one character for Japanese) at a time.
 The display speed can be adjusted with the value of `drawtime`.
 
 ```
@@ -990,7 +1021,7 @@ local msgs = [
 msg = new GUITextMessage(new Bounds(0, 0, 120, 30),msgs,font,"#FFF")
 ```
 
-To advance or go back in the messages, use the `goForward()` method in conjunction with key input or button operations.
+To advance or go back through the messages, use the `goForward()` method in conjunction with key input or button operations.
 
 ```
 //---For key operation

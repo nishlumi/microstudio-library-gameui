@@ -48,8 +48,12 @@ GameUI = class
     this.tmpparam = object end
     this.fps = new GUIFPS()
     this.font = null
+    this.callback = object end
 
-    //referlist[this.name] = this
+    this.old = object
+      touched = false
+      entered = false
+    end
     
   end
   loadJSON = function(data)
@@ -192,8 +196,50 @@ GameUI = class
     end
     return ishit
   end
+  fired_event = function()
+    //---common events
+    if mouse.release  then
+      if this.checkTouchArea(mouse.x, mouse.y) then
+        if (this.callback.onclick) and (this.callback.onclick.type == "function") then
+          (this.callback.onclick)()
+        end
+      end
+    elsif touch.release then
+      if this.checkTouchArea(touch.touches[0].x, touch.touches[0].y) then
+        if (this.callback.onclick) and (this.callback.onclick.type == "function") then
+          (this.callback.onclick)()
+        end
+      end
+    else
+      local entered = this.checkTouchArea(mouse.x, mouse.y)
+      local lbnd = new Bounds(mouse.x, mouse.y, 0, 0)
+      if touch.touches.length > 0 then
+        entered = this.checkTouchArea(touch.touches[0].x, touch.touches[0].y)
+        lbnd.x = touch.touches[0].x
+        lbnd.y = touch.touches[0].y
+      end
+      
+      if this.old.entered == false and entered == true then
+        if (this.callback.onenter) and (this.callback.onenter.type == "function") then
+          (this.callback.onenter)(lbnd)
+        end
+      end
+      if this.old.entered == true and entered == true then
+        if (this.callback.onstay) and (this.callback.onstay.type == "function") then
+          (this.callback.onstay)(lbnd)
+        end
+      end
+      if this.old.entered == true and entered == false then
+        if (this.callback.onleave) and (this.callback.onleave.type == "function") then
+          (this.callback.onleave)(lbnd)
+        end
+      end
+      this.old.entered = entered
+    end
+  end
   update = function()
     this.fps.update()
+    this.fired_event()
   end
   draw = function()
     screen.setDrawAnchor(this.anchorx, this.anchory)
@@ -306,6 +352,7 @@ GUIText = class extends GameUI
   end
   setText = function(txt)
     this.realtexts.clear()
+    local oldtext = this.text
     this.text = txt
     //this.bounds.w = this.bounds
     this.bounds.h = this.font.size
@@ -316,6 +363,10 @@ GUIText = class extends GameUI
       this.recalcWrap()
     else
       this.realtexts.push(this.text)
+    end
+    
+    if (this.callback.onchange) and (this.callback.onchange.type == "function") then
+      (this.callback.onchange)(txt, oldtext)
     end
   end
   recalcWrap = function()
@@ -354,6 +405,7 @@ GUICheckbox = class extends GameUI
     super(TYPELIST.CHECKBOX, new Bounds(bnd.x, bnd.y, 8, 8))
     this.pressed = false
     this.checked = false
+    this.old["checked"] = false
     this.text = new GUIText(text, new Bounds(bnd.x+12, bnd.y, bnd.w, bnd.h), font, color1, color2, shifted_x, shifted_y)
     this.text.setAnchor(-1,1)
     this.selectable = true
@@ -415,8 +467,16 @@ GUICheckbox = class extends GameUI
       this.pressed = false
     end
     
+    
     this.text.setPos(this.bounds.x+12, this.bounds.y)
     this.text.update()
+    
+    if this.old.checked != this.checked then
+      if (this.callback.onchange) and (this.callback.onchange.type == "function") then
+        (this.callback.onchange)(this.checked)
+      end
+    end
+    this.old.checked = this.checked
   end
   draw = function ()
     super()
@@ -435,12 +495,15 @@ GUIRadiobutton = class extends GameUI
     super(TYPELIST.RADIOBUTTON, new Bounds(bnd.x, bnd.y, 8, 8))
     this.pressed = false
     this.checked = false
+    this.oldchecked = false
     this.text = new GUIText(text, new Bounds(bnd.x+12, bnd.y, bnd.w, bnd.h), font, color1, color2, shifted_x, shifted_y)
     this.text.setAnchor(-1,1)
     this.selectable = true
     this.checkColor = "#FFF"
     this.group = grpname
     this.setAnchor(-1,1)
+    this.value = 
+    this.old["value"] = ""
     
   end
   loadJSON = function(data)
@@ -486,6 +549,21 @@ GUIRadiobutton = class extends GameUI
   uncheck = function()
     this.checked = false
   end
+  getGroupValue = function()
+    local ret = ""
+    for e in this.referlist
+      if (
+        (this.referlist[e].uitype == TYPELIST.RADIOBUTTON) and 
+        (this.referlist[e].group == this.group) and
+        (this.referlist[e].checked == true)
+      )
+      then
+        ret = this.referlist[e].name
+        break
+      end
+    end
+    return ret
+  end
   update = function()
     if this.parent == null then
       if GameUI.isOpenWindow then
@@ -508,6 +586,13 @@ GUIRadiobutton = class extends GameUI
         this.pressed = true
         
         this.checked = true
+        this.value = this.name
+        
+        if this.checked then
+          if (this.callback.onchange) and (this.callback.onchange.type == "function") then
+            (this.callback.onchange)(this.value)
+          end
+        end
       end
     elsif (touch.release) then
       if not this.pressed and this.checkTouchArea((touch.touches[0].x), (touch.touches[0].y)) then
@@ -523,10 +608,22 @@ GUIRadiobutton = class extends GameUI
           end
           this.pressed = true
           this.checked = true
+          this.value = this.name
+          
+          if this.checked then
+            if (this.callback.onchange) and (this.callback.onchange.type == "function") then
+              (this.callback.onchange)(this.value)
+            end
+          end
       end
     else
       this.pressed = false
     end
+    
+    
+    
+    this.old.value = this.value
+    
     
     super()
     local lx = this.bounds.x+12
@@ -598,8 +695,8 @@ GUIButton = class extends GameUI
     this.bgcolor = bgcolor
     this.pushbgcolor = pushbgcolor
     this.curBgcolor = bgcolor
-    this.callback = callback
-    this.pressing_callback = null
+    this.callback["onpress"] = callback
+    this.callback["onpressing"] = null
     this.setAnchor(-1,1)
     this.selectable = true
     this.shadow = object
@@ -635,9 +732,9 @@ GUIButton = class extends GameUI
     this.text.font = font
   end
   push = function()
-    if this.callback then
-      if this.callback.type == "function" then
-        (this.callback)()
+    if this.callback.onpush then
+      if this.callback.onpush.type == "function" then
+        (this.callback.onpush)()
       end
     end
   end
@@ -671,9 +768,9 @@ GUIButton = class extends GameUI
         this.curBgcolor = this.bgcolor
       end
       if this.pressed then
-        if this.callback then
-          if this.callback.type == "function" then
-            (this.callback)()
+        if this.callback.onpress then
+          if this.callback.onpress.type == "function" then
+            (this.callback.onpress)()
           end
         end
       end
@@ -682,8 +779,8 @@ GUIButton = class extends GameUI
         or 
         (touch.touching and this.checkTouchArea((touch.touches[0].x), (touch.touches[0].y))) 
       then
-        if this.pressing_callback != null then
-          (this.pressing_callback)()
+        if this.callback.onpressing != null then
+          (this.callback.onpressing)()
         end
       end
     end
@@ -725,10 +822,11 @@ GUISlider = class extends GameUI
     this.pushbarcolor = pushbarcolor
     this.curBarcolor = barcolor
     this.bgcolor = bgcolor
-    this.minval = minval
-    this.maxval = maxval
+    this.minvalue = minval
+    this.maxvalue = maxval
     this.step = step
-    this.curval = defaultval
+    this.value = defaultval
+    this.old["value"] = this.curvalue
     this.isVertical = isVertical
     this.setAnchor(-1,1)
     this.selectable = true
@@ -740,6 +838,7 @@ GUISlider = class extends GameUI
       y = 0
       color = this.barcolor
     end
+    this.callback["onchange"] = null
     
     this.common_setup()
   end
@@ -757,9 +856,9 @@ GUISlider = class extends GameUI
     if data.include("barcolor") then this.barcolor = data.barcolor end
     if data.include("pushbarcolor") then this.pushbarcolor = data.pushbarcolor end
     if data.include("curBarcolor") then this.curBarcolor = data.curBarcolor end
-    if data.include("curval") then this.curval = data.curval end
-    if data.include("minval") then this.minval = data.minval end
-    if data.include("maxval") then this.maxval = data.maxval end
+    if data.include("value") then this.value = data.value end
+    if data.include("minvalue") then this.minvalue = data.minvalue end
+    if data.include("maxvalue") then this.maxvalue = data.maxvalue end
     if data.include("step") then this.step = data.step end
     if data.include("label") then
       if data.label.include("enable") then this.label.enable = data.label.enable end
@@ -770,13 +869,13 @@ GUISlider = class extends GameUI
     if data.include("isVertical") then this.isVertical = data.isVertical end
     this.common_setup()
   end
-  value = function(val)
+  setValue = function(val)
     if val > 0 then
       
     elsif val < 0 then
     end
     local fullmmval = this.minval + this.maxval
-    this.curval += val
+    this.value += val
     local fullrate = fullmmval / this.curval
     
     if this.isVertical then
@@ -802,9 +901,9 @@ GUISlider = class extends GameUI
       local fulllen =  this.bounds.y - this.bounds.h + 2
       local zeromouse = round(round((round(y)-this.bounds.y) * 1000) / 1000)
       local fullrate = round(abs(zeromouse / this.bounds.h) * 1000) / 1000
-      local fullmmval = this.minval + this.maxval
+      local fullmmval = this.minvalue + this.maxvalue
       local calccurval = round(fullmmval * fullrate)
-      this.curval = max(this.minval, min(calccurval, this.maxval))
+      this.value = max(this.minvalue, min(calccurval, this.maxvalue))
       
       
       this.barbnd.x = this.bounds.x
@@ -813,12 +912,12 @@ GUISlider = class extends GameUI
       local fulllen =  this.bounds.x + this.bounds.w - 2
       local zeromouse = round(round((round(x)-this.bounds.x) * 1000) / 1000)
       local fullrate = round(abs(zeromouse / this.bounds.w) * 1000) / 1000
-      local fullmmval = this.minval + this.maxval
+      local fullmmval = this.minvalue + this.maxvalue
       local calccurval = round(fullmmval * fullrate)
       //print(this.bounds.x + "(" + zeromouse + ")" + " vs " + this.bounds.w)
       //print("2:  " + x + " / " + fulllen + "=" + fullrate)
       //print("3:   " + this.minval + "<" + fullrate + "_" + (calccurval) + "<" + this.maxval)
-      this.curval = max(this.minval, min(calccurval, this.maxval))
+      this.value = max(this.minvalue, min(calccurval, this.maxvalue))
       
       
       this.barbnd.x = max(this.bounds.x, min(x, fulllen))
@@ -853,6 +952,14 @@ GUISlider = class extends GameUI
         this.pressed = false
         this.curBarcolor = this.barcolor
       end
+      
+      if this.value != this.old.value then
+        if this.callback.onchange and (this.callback.onchange.type == "function") then
+          (this.callback.onchange)(this.value, this.old.value)
+        end
+      end
+      
+      this.old.value = this.value
     end
   end
   draw = function()
@@ -866,7 +973,7 @@ GUISlider = class extends GameUI
       if this.label.enable then
         local labelx = this.barbnd.x + this.label.x
         local labely = this.bounds.y - this.bounds.h - this.label.y - 5
-        screen.drawText(this.curval, labelx, labely, this.label.size, this.label.color)
+        screen.drawText(this.value, labelx, labely, this.label.size, this.label.color)
       end
     else
       //---meter
@@ -877,7 +984,7 @@ GUISlider = class extends GameUI
       if this.label.enable then
         local labelx = this.bounds.x + this.bounds.w + this.label.x
         local labely = this.barbnd.y + this.label.y
-        screen.drawText(this.curval, labelx, labely, this.label.size, this.label.color)
+        screen.drawText(this.value, labelx, labely, this.label.size, this.label.color)
       end
     end
     
@@ -913,6 +1020,8 @@ GUIDialog = class extends GameUI
     this.is_startdraw = false
     this.is_drawend = false
     
+    this.callback["onopen"] = null
+    this.callback["onclose"] = null
     
   end
   loadJSON = function(data)
@@ -937,7 +1046,7 @@ GUIDialog = class extends GameUI
       button.bounds.x = lx - button.bounds.w - 4
       button.bounds.y = ly + button.bounds.h + 8
       button.parent = this
-      button.callback = function()
+      button.callback.onpress = function()
         this.close()
       end
       //button.text.setText("OK")
@@ -1047,6 +1156,11 @@ GUIDialog = class extends GameUI
   open = function()
     this.is_startdraw = true
     GameUI.isOpenWindow = true
+    if this.callback.onopen then
+      if this.callback.onopen.type == "function" then
+        (this.callback.onopen)()
+      end
+    end
   end
   isOpen = function()
     return this.is_drawend
@@ -1059,6 +1173,11 @@ GUIDialog = class extends GameUI
       button.pressed = false
     end
     GameUI.isOpenWindow = false
+    if this.callback.onclose then
+      if this.callback.onclose.type == "function" then
+        (this.callback.onclose)()
+      end
+    end
   end
   update = function()
     super()
@@ -1209,6 +1328,7 @@ GUIScrollArea = class extends GameUI
       x = 0
       y = 0
     end
+    this.callback["onscroll"] = null
     
   end
   loadJSON = function(data)
@@ -1385,6 +1505,9 @@ GUIScrollArea = class extends GameUI
       if this.checkTouchArea(mouse.x, mouse.y) then
         //print("mouse wheel" + mouse.wheel + " -> " + (mouse.wheel*-1) + ", cury=" + this.cury)
         this.scrollY(mouse.wheel * -1)
+        if this.callback.onscroll and (this.callback.onscroll.type == "function") then
+          (this.callback.onscroll)(mouse.wheel * -1)
+        end
       end
     end
     if touch.touching then
@@ -1396,14 +1519,20 @@ GUIScrollArea = class extends GameUI
           this.oldtouches.y = touch.touches[0].y
         end
         local diffy = abs(touch.touches[0].y - this.oldtouches.y)
-        print(diffy)
+        //print(diffy)
         if diffy > 5 then
           if touch.touches[0].y > this.oldtouches.y then
             //print("up")
             this.scrollY(1)
+            if this.callback.onscroll and (this.callback.onscroll.type == "function") then
+              (this.callback.onscroll)(1)
+            end
           elsif touch.touches[0].y < this.oldtouches.y then
             //print("down")
             this.scrollY(-1)
+            if this.callback.onscroll and (this.callback.onscroll.type == "function") then
+              (this.callback.onscroll)(-1)
+            end
           end
         end
       end
@@ -1480,6 +1609,8 @@ GUIListBox = class extends GUIScrollArea
     this.itemheight = 25
     this.item_str = items
     this.selectIndex = -1
+    this.old.selectIndex = -1
+    this.callback["onchange"] = null
     this.generate_item(this.item_str, this.itemheight)
   end
   loadJSON = function(data)
@@ -1521,9 +1652,17 @@ GUIListBox = class extends GUIScrollArea
     for i = 0 to this.contents.length-1
       if this.contents[i].pressed then
         this.selectIndex = i
+        //---only update cycle
+        if this.selectIndex != this.old.selectIndex then
+          if this.callback.onchange != null then
+            (this.callback.onchange)(this.selectIndex,this.old.selectIndex)
+          end
+        end
         break
       end
     end
+    
+    this.old.selectIndex = this.selectIndex
   end
   draw = function()
     super()
