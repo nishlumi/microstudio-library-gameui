@@ -66,7 +66,7 @@ init = function()
   uiman.add(aimgman)
   aimgman.curMove = "bottom"
   */
-  testrect1 = new GUIRect(new Bounds(scr.pos(10),scr.pos(10),scr.pos(3),scr.pos(3)), "#0FF")
+  testrect1 = new GUIRect(new Bounds(scr.ulen(10),scr.ulen(10),scr.ulen(3),scr.ulen(3)), "#0FF")
   scr.uimanager.add(testrect1,"default")
   testrect1.callback.onenter = function()
     print("testrect1 enter!")
@@ -194,7 +194,7 @@ update = function()
   
   //---
   if scr.fps.each(30) then
-    testrect1.setPos(scr.pos(random.nextInt(10)),testrect1.bounds.y)
+    testrect1.setPos(scr.ulen(random.nextInt(10)),testrect1.bounds.y)
   end
   //uiman.update("default")
 end

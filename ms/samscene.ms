@@ -9,23 +9,23 @@ SceneFirst = class
     
     
     //---GUIText
-    this.txt = new GUIText("アイテムのリストから選択するためのマテリアルデザインボタン。",
-      new Bounds(this.scr.left+10,90,120,8),this.font,"#FFF"
+    this.txt = new GUIText("I love hamburgers, especially the Chicken Tatsuta Burger from McDonald's.",
+      bnew(this.scr.toRight(3),90,120,8),this.font,"#FFF"
     )
     this.txt.anchorx = -1
     this.txt.anchory = 1
     this.uiman.add(this.txt, this.grpname)
     
     //---GUICheckbox
-    this.chk = new GUICheckbox("アップル",new Bounds(this.scr.left+10,30,75,10),false,this.font,"#FFF")
+    this.chk = new GUICheckbox("Apple",bnew(this.scr.left+10,30,75,10),false,this.font,"#FFF")
     this.uiman.add(this.chk, this.grpname)
     this.chk.callback.onchange = function(checked)
       print("scene 1 checkbox:" + checked)
     end
     
     //---GUIRadiobutton
-    this.rad1 = new GUIRadiobutton("Yes","yesno",new Bounds(this.scr.left+10,0,75,10),true,this.font,"#FFF")
-    this.rad2 = new GUIRadiobutton("NO","yesno",new Bounds(this.scr.left+10,-this.font.size-4,75,10),false,this.font,"#FFF")
+    this.rad1 = new GUIRadiobutton("Yes","yesno",bnew(this.scr.left+10,0,75,10),true,this.font,"#FFF")
+    this.rad2 = new GUIRadiobutton("NO","yesno",bnew(this.scr.left+10,-this.font.size-4,75,10),false,this.font,"#FFF")
     this.uiman.add(this.rad1, this.grpname)
     this.uiman.add(this.rad2, this.grpname)
     local radcb = function(value)
@@ -35,7 +35,7 @@ SceneFirst = class
     this.rad2.callback.onchange = radcb
     
     //---GUISlider (horizontal)
-    this.sld = new GUISlider(new Bounds(this.scr.left+10,this.scr.bottom+50,70,20),0,0,50,1,false)
+    this.sld = new GUISlider(new Bounds(this.scr.toRight(2),this.scr.toTop(6),70,20),0,0,50,1,false)
     this.uiman.add(this.sld, this.grpname)
     this.sld.callback.onchange = function(newval, oldval)
       print("scene 1 slider:" + oldval.toString() + " -> " + newval.toString())
@@ -97,7 +97,7 @@ SceneFirst = class
     this.gridmap.generate_fromcsv(csv)
     this.gridmap.enable_cursor = true
     
-    this.gridmap.events.onreachedge = function(x, y)
+    this.gridmap.callback.onreachedge = function(x, y)
       print("cursor move is " + x.toString() + ":" + y.toString())
     end
   end

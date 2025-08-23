@@ -91,6 +91,9 @@ Bounds = class
   end
   
 end
+bnew = function (x = 0, y = 0, w = 0, h = 0)
+  return new Bounds(x, y, w, h)
+end
 GUIFPS = class
   constructor = function()
     this.framedur = 1000 / system.fps
@@ -121,12 +124,12 @@ GUISystem = class
     end
     this.unit = 8
     this.unitRange = object
-      minx = round(-screen.width/2) / this.unit
-      miny = round(-screen.height/2) / this.unit
-      maxx = round(screen.width/2) / this.unit
-      maxy = round(screen.height/2) / this.unit
-      countx = round(screen.width) / this.unit
-      county = round(screen.height) / this.unit
+      minx = round(-screen.width/2 / this.unit)
+      miny = round(-screen.height/2 / this.unit)
+      maxx = round(screen.width/2 / this.unit)
+      maxy = round(screen.height/2 / this.unit)
+      countx = round(screen.width / this.unit)
+      county = round(screen.height / this.unit)
     end
     this.fps = new GUIFPS()
     this.fonts = []
@@ -145,8 +148,20 @@ GUISystem = class
     this.unitRange.countx = round(screen.width) / this.unit
     this.unitRange.county = round(screen.height) / this.unit
   end
-  pos = function(num)
+  ulen = function(num)
     return num * this.unit
+  end
+  toRight = function(num)
+    return this.left + this.ulen(num)
+  end
+  toLeft = function(num)
+    return this.right - this.ulen(num)
+  end
+  toBottom = function(num)
+    return this.top - this.ulen(num)
+  end
+  toTop = function(num)
+    return this.bottom + this.ulen(num)
   end
   addFont = function (name,size)
     this.fonts.push(new GameFont(name,size))

@@ -1,6 +1,6 @@
 # GameUI ライブラリ
 
-**version:** 1.0.0
+**version:** 1.0.1
 
 ## 概要
 
@@ -194,7 +194,7 @@ end
 
 ### マス目を意識した位置を設定できる
 
-`GUISystem.pos` メソッドを使うと、`unit`のサイズによるグリッド数で位置やサイズを表現できるようになります。
+`GUISystem.ulen` メソッドを使うと、`unit`のサイズによるグリッド数で位置やサイズを表現できるようになります。
 
 `GUISystem`には、`unit`というプロパティが存在します。これを `setUnit`メソッドで設定すると、その`unit`の単位を変更できます。
 
@@ -202,7 +202,7 @@ end
 ```
 gsys = new GUISystem()
 gsys.setUnit(16)
-screen.drawRect(gsys.pos(0),gsys.pos(3),gsys.pos(5),gsys.pos(5))
+screen.drawRect(gsys.ulen(0),gsys.ulen(3),gsys.ulen(5),gsys.ulen(5))
 //---In reality, the following is specified:
 screen.drawRect(0, 3*16, 5*16, 5*16)
 ```
@@ -210,7 +210,34 @@ screen.drawRect(0, 3*16, 5*16, 5*16)
 上記例だと、座標の単位を16にし、四角形を描画しています。
 x=0, y=0の位置から、width=5,height=5という指定の意味になっています。
 
-`pos`メソッドは位置だけでなくサイズ変更にも使えるので、ゲーム中での描画の位置の指定が管理しやすくなるでしょう。
+`ulen`メソッドは位置だけでなくサイズ変更にも使えるので、ゲーム中での描画の位置の指定が管理しやすくなるでしょう。
+
+さらに、画面の左から、右から、上から、下からで明確に指定できるメソッドもあります。
+
+下記の例ですと、画面の左端から右へ8ユニットx3、上端から下へ8ユニットx4、幅8ユニットx5、高さ8ユニットx3
+の位置とサイズで四角形を生成します。
+
+```
+gsys = new GUISystem()
+local rect = new GUIRect(
+  new Bounds(
+    gsys.toRight(3), // instead of gsys.left + gsys.ulen(3)
+    gsys.toBottom(4), // instead of gsys.top - gsys.ulen(4)
+    gsys.ulen(5),
+    gsys.ulen(3)
+  )
+)
+```
+
+* **`toRight(num)`**: 左端から右へnumの数のユニット分のX座標を取得
+* **`toLeft(num)`**: 右端から左へnumの数のユニット分のX座標を取得
+* **`toBottom(num)`**: 上端から下へnumの数のユニット分のY座標を取得
+* **`toTop(num)`**: 下端から上へnumの数のユニット分のY座標を取得
+
+これらのメソッドを使うことで、画面のサイズ・比率が違っても、画面の端からの位置を取得できるので、環境による差異を吸収できます。
+
+
+
 
 
 ## 各種イベントのコールバック関数を設定する

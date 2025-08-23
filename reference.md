@@ -6,6 +6,8 @@
 
 **`drawSpritePartBounds = function(imagename, srcbnd, destbnd)`**: A `Bounds` version of `screen.drawSpritePart`. Draws a specified part of an image to a specified rectangular area.
 
+**`bnew = function(x, y, w, h)`**: A shorthand for `new Bounds()`, which can be used for even shorter functions.
+
 ### `Object` Extension
 
 #### Methods
@@ -109,7 +111,11 @@ A class that handles basic UI system settings, coordinate transformation, and ti
 
 * **`constructor()`**: Initializes a `GUISystem` instance, sets coordinates, grid, and units based on the screen size, and creates a `GUIFPS` instance.
 * **`setUnit(unit: Number)`**: Sets a new unit.
-* **`pos(num: Number)`**: Converts the specified number of grid units to pixel coordinates and returns the value.
+* **`ulen(num: Number)`**: Converts the specified number of grid units to pixel coordinates and returns the value.
+* **`toRight(num: Number)`**: Returns the X coordinate located the specified number of units to the right from the left edge of the screen.
+* **`toLeft(num: Number)`**: Returns the X coordinate located the specified number of units to the left from the right edge of the screen.
+* **`toBottom(num: Number)`**: Returns the Y coordinate located the specified number of units down from the top of the screen.
+* **`toTop(num: Number)`**: Returns the Y coordinate located the specified number of units up from the bottom of the screen.
 * **`addFont(name,size)`**: Adds a font you want to use.
 * **`update()`**: Calls the `update` method of the `fps` property to update internal time management. It also saves the screen size to `oldscreen`. Returns the value from KeyManager.update.
 * **`uiupdate(grp = "default")`**: Updates the UI of the specified group in the GameUIManager.

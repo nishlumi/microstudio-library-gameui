@@ -6,7 +6,7 @@
 
 **`drawSpritePartBounds = function(imagename, srcbnd, destbnd)`**: `screen.drawSpritePart`の`Bounds`版です。画像の指定された部分を指定された矩形領域に描画します。
 
-
+**`bnew = function(x, y, w, h)`**: `new Bounds()`の短縮版です。さらに短く書きたい場合に利用できます。
 
 
 ### `Object` 拡張
@@ -63,6 +63,7 @@
 * **`constructor = function (x, y = 0, w = 0, h = 0)`**: 矩形領域の新しいインスタンスを作成します。引数がオブジェクトの場合、そのプロパティをコピーします。
 * **`zero = function()`**: Boundsのプロパティ全てが0のインスタンスを返します。インスタンス化していなくても使えます。
 
+
 ---
 
 ### `GUIFPS`
@@ -112,7 +113,11 @@ UIシステムの基本的な設定と座標変換、時間管理（`GUIFPS`を�
 
 * **`constructor()`**: `GUISystem` のインスタンスを初期化し、スクリーンサイズに基づいた座標、グリッド、単位を設定し、`GUIFPS` のインスタンスを作成します。
 * **`setUnit(unit: Number)`**: 新しい単位のunitを設定します。
-* **`pos(num: Number)`**: 指定されたグリッド単位の数値をピクセル座標に変換して返します。
+* **`ulen(num: Number)`**: 指定されたグリッド単位の数値をピクセル座標に変換して返します。
+* **`toRight(num: Number)`**: 画面の左端から指定されたユニット数だけ右に移動したX座標を返します。
+* **`toLeft(num: Number)`**: 画面の右端から指定されたユニット数だけ左に移動したX座標を返します。
+* **`toBottom(num: Number)`**: 画面の上端から指定されたユニット数だけ下に移動したY座標を返します。
+* **`toTop(num: Number)`**: 画面の下端から指定されたユニット数だけ上に移動したY座標を返します。
 * **`addFont(name,size)`**: 使用したいフォントを追加します。
 * **`update()`**: `fps` プロパティの `update` メソッドを呼び出し、内部の時間管理を更新します。また、スクリーンのサイズを `oldscreen` に保存します。KeyManager.updateからの戻り値を取得してさらに返します。
 * **`uiupdate(grp = "default")`**: GameUIManagerの指定のグループのUIを更新します。
