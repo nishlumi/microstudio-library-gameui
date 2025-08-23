@@ -6,7 +6,7 @@
 
 **`drawSpritePartBounds = function(imagename, srcbnd, destbnd)`**: `screen.drawSpritePart`の`Bounds`版です。画像の指定された部分を指定された矩形領域に描画します。
 
-
+**`bnew = function(x, y, w, h)`**: `new Bounds()`の短縮版です。さらに短く書きたい場合に利用できます。
 
 
 ### `Object` 拡張
@@ -62,6 +62,7 @@
 
 * **`constructor = function (x, y = 0, w = 0, h = 0)`**: 矩形領域の新しいインスタンスを作成します。引数がオブジェクトの場合、そのプロパティをコピーします。
 * **`zero = function()`**: Boundsのプロパティ全てが0のインスタンスを返します。インスタンス化していなくても使えます。
+
 
 ---
 

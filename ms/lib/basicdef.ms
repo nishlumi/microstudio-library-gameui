@@ -91,6 +91,9 @@ Bounds = class
   end
   
 end
+bnew = function (x = 0, y = 0, w = 0, h = 0)
+  return new Bounds(x, y, w, h)
+end
 GUIFPS = class
   constructor = function()
     this.framedur = 1000 / system.fps

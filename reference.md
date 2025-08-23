@@ -6,6 +6,8 @@
 
 **`drawSpritePartBounds = function(imagename, srcbnd, destbnd)`**: A `Bounds` version of `screen.drawSpritePart`. Draws a specified part of an image to a specified rectangular area.
 
+**`bnew = function(x, y, w, h)`**: A shorthand for `new Bounds()`, which can be used for even shorter functions.
+
 ### `Object` Extension
 
 #### Methods

@@ -9,15 +9,15 @@ SceneFirst = class
     
     
     //---GUIText
-    this.txt = new GUIText("アイテムのリストから選択するためのマテリアルデザインボタン。",
-      new Bounds(this.scr.left+10,90,120,8),this.font,"#FFF"
+    this.txt = new GUIText("I love hamburgers, especially the Chicken Tatsuta Burger from McDonald's.",
+      bnew(this.scr.left+10,90,120,8),this.font,"#FFF"
     )
     this.txt.anchorx = -1
     this.txt.anchory = 1
     this.uiman.add(this.txt, this.grpname)
     
     //---GUICheckbox
-    this.chk = new GUICheckbox("アップル",new Bounds(this.scr.left+10,30,75,10),false,this.font,"#FFF")
+    this.chk = new GUICheckbox("Apple",new Bounds(this.scr.left+10,30,75,10),false,this.font,"#FFF")
     this.uiman.add(this.chk, this.grpname)
     this.chk.callback.onchange = function(checked)
       print("scene 1 checkbox:" + checked)
@@ -97,7 +97,7 @@ SceneFirst = class
     this.gridmap.generate_fromcsv(csv)
     this.gridmap.enable_cursor = true
     
-    this.gridmap.events.onreachedge = function(x, y)
+    this.gridmap.callback.onreachedge = function(x, y)
       print("cursor move is " + x.toString() + ":" + y.toString())
     end
   end
