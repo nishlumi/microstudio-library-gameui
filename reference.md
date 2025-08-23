@@ -290,6 +290,7 @@ The base class for all UI elements.
 * **`selectable`**: A boolean value indicating whether the UI is selectable.
 * **`focusable`**: A boolean value indicating whether the UI is focusable.
 * **`enabled`**: A boolean value indicating whether the UI is enabled.
+* **`visible`**: A Boolean value indicating whether the UI is visible.
 * **`parent`**: A reference to `GameUIManager`.
 * **`keyman`**: A reference to `KeyManager`.
 * **`rotate`**: The rotation angle of the UI element.

@@ -300,6 +300,7 @@ UI要素のタイプを定義するオブジェクトです。数値で各UIタ�
 * **`selectable`**: UIが選択可能かどうかのブール値。
 * **`focusable`**: UIがフォーカス可能かどうかのブール値。
 * **`enabled`**: UIが有効かどうかを示すブール値。
+* **`visible`**: UIが表示中かどうかを示すブール値。
 * **`parent`**: `GameUIManager`への参照。
 * **`keyman`**: `KeyManager`への参照。
 * **`rotate`**: UI要素の回転角度。
