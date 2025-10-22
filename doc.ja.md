@@ -267,3 +267,9 @@ img.callback.onenter = function(bnd)
   print("Enter the image from (" + bnd.x.toString() + "," + bnd.y.toString() + ")")
 end
 ```
+
+## ChangeLog
+
+2025/10/22:
+
+* GameUIの派生クラスで、visibleプロパティが効いていなかったのを修正。

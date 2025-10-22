@@ -266,3 +266,10 @@ img.callback.onenter = function(bnd)
   print("Enter the image from (" + bnd.x.toString() + "," + bnd.y.toString() + ")")
 end
 ```
+
+
+## ChangeLog
+
+2025/10/22:
+
+* Fixed the issue where the visible property was not working in GameUI derived classes.
