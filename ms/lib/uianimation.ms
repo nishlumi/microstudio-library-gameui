@@ -89,6 +89,7 @@ GUIAnimationImage = class extends GameUI
     this.imagelist[this.curImage].update()
   end
   draw = function()
+    if this.visible == false then return end
     super()
     this.imagelist[this.curImage].draw()
     

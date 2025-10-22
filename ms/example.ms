@@ -92,6 +92,7 @@ init = function()
     ca0 = function()
       curscene = null
       print("curscene is 0")
+      aimgman.cur().visible = true
       aimgman.cur().play()
     end
     local btn0 = new GUIButton("To default",new Bounds(scr.left,scr.bottom+20,60,20),ft,"#3F3","#1A1", "#FFF",true,3,ca0)
@@ -100,6 +101,7 @@ init = function()
     ca1 = function()
       curscene = fscene
       print("curscene is 1")
+      aimgman.cur().visible = true
       aimgman.cur().stop()
     end
     local btn1 = new GUIButton("Scene 1",new Bounds(scr.left+60,scr.bottom+20,60,20),ft,"#3F3","#1A1", "#FFF",true,3,ca1)
@@ -108,6 +110,7 @@ init = function()
     ca2 = function()
       curscene = sscene
       print("curscene is 2")
+      aimgman.cur().visible = true
       aimgman.cur().stop()
     end
     local btn2 = new GUIButton("Scene 2",new Bounds(scr.left+120,scr.bottom+20,60,20),ft,"#3F3","#1A1", "#FFF",true,3,ca2)
@@ -116,6 +119,7 @@ init = function()
     ca3 = function()
       curscene = tscene
       print("curscene is 3")
+      aimgman.cur().visible = true
       aimgman.cur().play()
     end
     local btn3 = new GUIButton("Scene 3",new Bounds(scr.left+180,scr.bottom+20,60,20),ft,"#3F3","#1A1", "#FFF",true,3,ca3)
@@ -125,6 +129,7 @@ init = function()
       curscene = fourscene
       print("curscene is 4")
       aimgman.cur().play()
+      aimgman.cur().visible = false
     end
     local btn4 = new GUIButton("Scene 4",new Bounds(scr.left+240,scr.bottom+20,60,20),ft,"#3F3","#1A1", "#FFF",true,3,ca4)
     btn4.name = "btn4"

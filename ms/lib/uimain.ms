@@ -3,7 +3,7 @@
   
   It makes it easier to create UI in your game.
   
-  version: 1.0.1
+  version: 1.0.2
   
 */
 
@@ -30,6 +30,7 @@ GameUI = class
     this.selectable = false
     this.focusable = true
     this.enabled = true
+    this.visible = true
     /**
     *
     * @type {GameUIManager}
@@ -307,6 +308,7 @@ GUIImage = class extends GameUI
     super()
   end
   draw = function()
+    if this.visible == false then return end
     super()
     
     if this.isCutSprite then
@@ -384,6 +386,7 @@ GUIText = class extends GameUI
     super()
   end
   draw = function()
+    if this.visible == false then return end
     super()
     if this.realtexts.length == 0 then
       return
@@ -479,6 +482,7 @@ GUICheckbox = class extends GameUI
     this.old.checked = this.checked
   end
   draw = function ()
+    if this.visible == false then return end
     super()
     if this.checked then
       screen.fillRect(this.bounds.x, this.bounds.y, this.bounds.w, this.bounds.h, this.checkColor)
@@ -631,6 +635,7 @@ GUIRadiobutton = class extends GameUI
     this.text.update()
   end
   draw = function ()
+    if this.visible == false then return end
     super()
     if this.checked then
       screen.fillArc(this.bounds.x+this.bounds.w/2, this.bounds.y-this.bounds.h/2, this.bounds.w/2, 0, 360, true, this.checkColor)
@@ -667,6 +672,7 @@ GUIRect = class extends GameUI
     super()
   end
   draw = function()
+    if this.visible == false then return end
     super()
     if this.filled then
       if this.radius != 0 then
@@ -786,6 +792,7 @@ GUIButton = class extends GameUI
     end
   end
   draw = function ()
+    if this.visible == false then return end
     super()
     if this.filled then
       if this.radius != 0 then
@@ -963,6 +970,7 @@ GUISlider = class extends GameUI
     end
   end
   draw = function()
+    if this.visible == false then return end
     super()
     if this.isVertical then
       //---meter
@@ -1206,6 +1214,7 @@ GUIDialog = class extends GameUI
     end
   end
   draw = function()
+    if this.visible == false then return end
     if this.is_drawend then
       screen.setAlpha(0.35)
       screen.setDrawAnchor(0,0)
@@ -1279,6 +1288,7 @@ GUIContainer = class extends GameUI
     end
   end
   draw = function()
+    if this.visible == false then return end
     super()
     if this.filled then
       if this.radius != 0 then
@@ -1577,6 +1587,7 @@ GUIScrollArea = class extends GameUI
     end
   end
   draw = function()
+    if this.visible == false then return end
     super()
     if this.filled then
       if this.radius != 0 then
@@ -1665,6 +1676,7 @@ GUIListBox = class extends GUIScrollArea
     this.old.selectIndex = this.selectIndex
   end
   draw = function()
+    if this.visible == false then return end
     super()
     if this.selectIndex.checkRange(0, this.contents.length-1) then
       local selitem  = this.contents[this.selectIndex]

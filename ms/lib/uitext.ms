@@ -76,6 +76,7 @@ GUITextMessage = class extends GUIContainer
     end
   end
   draw = function()
+    if this.visible == false then return end
     super()
     this.showtext.draw()
   end
